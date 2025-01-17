@@ -8,3 +8,5 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 // Supabaseクライアントの作成
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+export default supabase;
