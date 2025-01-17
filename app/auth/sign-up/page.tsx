@@ -2,9 +2,17 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import supabase from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
+import "../sign-up/signup.css";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -18,7 +26,7 @@ export default function SignUpPage() {
     e.preventDefault();
 
     // Supabaseのサインアップ機能
-    const { error } = await supabase.auth.signup({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -29,12 +37,14 @@ export default function SignUpPage() {
     } else {
       // 登録出来たら、メールを確認メッセージを表示
       setMessage("確認メールを送信しました。メールをご確認ください。");
-      router.push("/app/auth/sign-in/page.tsx"); //サインインページに遷移
+      setError(null);
+
+      setTimeout(() => router.push("/auth/sign-in"), 2000);
     }
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="container">
       <Box>
         <Typography>アカウント作成</Typography>
 
@@ -56,12 +66,10 @@ export default function SignUpPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={handleSignUp}
-          >
+          {error && <Alert severity="error">{error}</Alert>}
+          {message && <Alert severity="success">{message}</Alert>}
+
+          <Button type="submit" variant="contained" color="primary">
             Sign Up
           </Button>
         </Box>
