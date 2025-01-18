@@ -1,4 +1,79 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: linear-gradient(89deg, #88b2ea, #bbeceb, #b5dfb2, #8ff5a5),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    url("/images/colorful-pattern.png");
+  background-blend-mode: overlay, screen;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto;
+}
+
 .container {
-  margin-top: 50px;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.signup-box {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* 透過感を持たせて背景と馴染ませる */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* 影を付けて立体感を出す */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.signup-title {
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: #333333;
+  font-size: 1.5rem;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.signup-input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd; /* ライトグレーのボーダー */
+  border-radius: 5px; /* ラウンドコーナー */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 内側の影 */
+}
+
+.signup-button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 8px;
+  background-color: #3c8ce7;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #007bb5;
+  color: #ffffff;
 }

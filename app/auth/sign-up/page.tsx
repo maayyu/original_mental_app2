@@ -24,6 +24,8 @@ export default function SignUpPage() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setMessage(null);
 
     // Supabaseのサインアップ機能
     const { error } = await supabase.auth.signUp({
@@ -39,16 +41,16 @@ export default function SignUpPage() {
       setMessage("確認メールを送信しました。メールをご確認ください。");
       setError(null);
 
-      setTimeout(() => router.push("/auth/sign-in"), 2000);
+      setTimeout(() => router.push("/auth/sign-in"), 3000);
     }
   };
 
   return (
-    <Container maxWidth="sm" className="container">
-      <Box>
-        <Typography>アカウント作成</Typography>
+    <Container className="container">
+      <Box className="signup-box">
+        <Typography className="signup-title">アカウント作成</Typography>
 
-        <Box component="form" onSubmit={handleSignUp}>
+        <Box component="form" onSubmit={handleSignUp} className="signup-form">
           <TextField
             label="メールアドレス"
             variant="outlined"
@@ -56,6 +58,7 @@ export default function SignUpPage() {
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="signup-input"
           />
           <TextField
             label="パスワード"
@@ -64,12 +67,13 @@ export default function SignUpPage() {
             margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="signup-input"
           />
 
           {error && <Alert severity="error">{error}</Alert>}
           {message && <Alert severity="success">{message}</Alert>}
 
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" className="signup-button">
             Sign Up
           </Button>
         </Box>
