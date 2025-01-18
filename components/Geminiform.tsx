@@ -1,21 +1,38 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { geminiRun } from "../lib/geminiClient";
 
-const Home = () => {
+const GeminiForm = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const outputRef = useRef<HTMLTextAreaElement>(null);
+  const [loading, setLoading] = useState(false);
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     if (inputRef.current && outputRef.current) {
+      const inputText = inputRef.current.value;
       // 入力値を出力フィールドに反映
-      outputRef.current.value = inputRef.current.value;
+      if (inputText.trim() === "") {
+        outputRef.current.value = "テキストを入力してください";
+        return;
+      }
+      setLoading(true);
+      try {
+        const transformedText = await geminiRun(inputText);
+        outputRef.current.value = transformedText;
+      } catch (error) {
+        console.log("Error while processing:", error);
+        outputRef.current.value =
+          "変換に失敗しました、もう一度入力してください";
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <div className="App">
-      <p>Input</p>
+      <p>今日のInput</p>
       <textarea
         id="input"
         rows={5}
@@ -23,7 +40,7 @@ const Home = () => {
         className="textarea"
       ></textarea>
 
-      <p>Output</p>
+      <p>言い換えOutput</p>
       <textarea
         id="output"
         rows={5}
@@ -32,8 +49,13 @@ const Home = () => {
         className="textarea"
       ></textarea>
 
-      <button type="button" id="button" onClick={onButtonClick}>
-        send
+      <button
+        type="button"
+        id="button"
+        onClick={onButtonClick}
+        disabled={loading}
+      >
+        {loading ? "変換中..." : "送信"}
       </button>
 
       <style jsx>{`
@@ -45,20 +67,20 @@ const Home = () => {
         }
 
         button {
-          background-color: #6200ee;
+          background-color: ${loading ? "#cccccc" : "#6200ee"};
           color: white;
           border: none;
           padding: 8px 16px;
-          cursor: pointer;
+          cursor: ${loading ? "not-allowed" : "pointer"};
           font-size: 16px;
         }
 
         button:hover {
-          background-color: #3700b3;
+          background-color: ${loading ? "#cccccc" : "#3700b3"};
         }
       `}</style>
     </div>
   );
 };
 
-export default Home;
+export default GeminiForm;
