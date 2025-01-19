@@ -1,0 +1,100 @@
+/* グローバルスタイル */
+body,
+html {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: linear-gradient(89deg, #88b2ea, #bbeceb, #b5dfb2, #8ff5a5),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    url("/images/colorful-pattern.png");
+  background-blend-mode: overlay, screen;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% auto;
+  font-family: Arial, sans-serif;
+}
+
+/* コンテナ */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+/* サインアップボックス */
+.signin-box {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  margin: auto;
+}
+
+/* タイトル */
+.signin-title {
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: #333333;
+  font-size: 1.5rem;
+}
+
+/* フォーム */
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 入力フィールド */
+.signin-input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* アラート */
+.alert {
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ボタン */
+.signin-button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 8px;
+  background-color: #3c8ce7;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-button:hover {
+  background-color: #007bb5;
+}
