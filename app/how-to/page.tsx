@@ -2,6 +2,6 @@
 
 import React from "react";
 
-export default function HowToUsePage() {
+export default function HowToPage() {
   return <div>How to Use</div>;
 }
