@@ -1,4 +1,3 @@
-// ホーム画面中央
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import supabase from "@/lib/supabaseClient";
+import "./home.css";
 
 export default function HomePage() {
   const [diaries, setDiaries] = useState([]);
@@ -41,11 +41,12 @@ export default function HomePage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
-        height: "100vh",
+        justifyContent: "center", // 中央に配置
+        padding: "30px",
         width: "100%",
-        padding: "16px",
+        height: "100vh",
         boxSizing: "border-box",
+        backgroundColor: "#f5f5f5", // 背景色を追加
       }}
     >
       {/* メインビジュアル（木の画像） */}
@@ -53,26 +54,27 @@ export default function HomePage() {
         sx={{
           flex: 1,
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
+          alignItems: "center",
           width: "100%",
           backgroundColor: "rgba(255, 255, 255, 0.8)",
           borderRadius: "8px",
-          margin: "20px",
+          marginBottom: "20px", // 下に余白を追加
+          padding: "10px",
         }}
       >
         <img
           src="/images/tree-silhouette.jpeg"
           alt="木の画像"
-          style={{ maxWidth: "100%", maxHeight: "80%" }}
+          style={{ maxWidth: "100%", maxHeight: "80%", borderRadius: "8px" }}
         />
       </Box>
 
       {/* 最新の日記 */}
       <Box
         sx={{
-          flex: 1,
           width: "100%",
+          maxWidth: "900px", // 最大幅を設定
           backgroundColor: "rgba(255, 255, 255, 0.8)",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -84,12 +86,12 @@ export default function HomePage() {
           最新の日記
         </Typography>
         {loading ? (
-          <CircularProgress />
+          <CircularProgress sx={{ display: "block", margin: "0 auto" }} />
         ) : (
           <List>
             {diaries.map((diary) => (
               <React.Fragment key={diary.id}>
-                <ListItem>
+                <ListItem sx={{ paddingLeft: 0, paddingRight: 0 }}>
                   <Box sx={{ width: "100%" }}>
                     <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                       {new Date(diary.created_at).toLocaleString("ja-JP", {
@@ -104,24 +106,24 @@ export default function HomePage() {
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ marginLeft: "8px", marginTop: "8px" }}
+                      sx={{ marginTop: "8px", wordBreak: "break-word" }}
                     >
                       <strong>日記内容:</strong> {diary.content}
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ marginLeft: "8px", marginTop: "8px" }}
+                      sx={{ marginTop: "8px", wordBreak: "break-word" }}
                     >
                       <strong>変換後の日記内容:</strong>{" "}
                       {diary.converted_content}
                     </Typography>
-                  </Box>{" "}
+                  </Box>
                 </ListItem>
                 <Divider />
               </React.Fragment>
             ))}
           </List>
-        )}{" "}
+        )}
       </Box>
     </Box>
   );
