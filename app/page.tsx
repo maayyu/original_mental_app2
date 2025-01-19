@@ -1,8 +1,11 @@
-// ホーム画面
+"use client";
 
-// import HomeMain from "./home/page";
-import GeminiForm from "../components/Geminiform";
+import HomeMain from "./home/page";
 
 export default function Home() {
-  return <GeminiForm />;
+  return (
+    <>
+      <HomeMain />
+    </>
+  );
 }
