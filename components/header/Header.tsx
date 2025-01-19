@@ -41,6 +41,10 @@ export default function Header() {
     }
   };
 
+  const handleHome = async () => {
+    router.push("/");
+  };
+
   return (
     <header className="header">
       <div className="header-center">
@@ -48,6 +52,9 @@ export default function Header() {
       </div>
 
       <div className="header-right">
+        <button className="header-home" onClick={handleHome}>
+          ホーム
+        </button>{" "}
         {user ? (
           <>
             <div className="user-icon">{user.email.charAt(0)}</div>{" "}
