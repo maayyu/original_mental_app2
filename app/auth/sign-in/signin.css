@@ -32,7 +32,7 @@ html {
 }
 
 /* サインアップボックス */
-.signup-box {
+.signin-box {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 2rem;
   border-radius: 8px;
@@ -45,7 +45,7 @@ html {
 }
 
 /* タイトル */
-.signup-title {
+.signin-title {
   margin-bottom: 1.5rem;
   font-weight: bold;
   color: #333333;
@@ -53,14 +53,14 @@ html {
 }
 
 /* フォーム */
-.signup-form {
+.signin-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 /* 入力フィールド */
-.signup-input {
+.signin-input {
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
@@ -80,14 +80,9 @@ html {
   color: #721c24;
   border: 1px solid #f5c6cb;
 }
-.alert.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
 
 /* ボタン */
-.signup-button {
+.signin-button {
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: bold;
@@ -100,27 +95,6 @@ html {
   transition: background-color 0.3s ease;
 }
 
-.signup-button:hover {
+.signin-button:hover {
   background-color: #007bb5;
-}
-
-/* サインイン画面への誘導 */
-.signin-container {
-  margin-top: 30px;
-}
-
-.signin-text {
-  font-size: 15px;
-  color: #333;
-}
-
-.signin-link {
-  font-size: 1rem;
-  color: #56a8ff;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.signin-link:hover {
-  text-decoration: underline;
 }
