@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import supabase from "@/lib/supabaseClient";
 import "./home.css";
+import PixijsForm from "@/components/PixijsForm";
 
 export default function HomePage() {
   const [diaries, setDiaries] = useState([]);
@@ -63,11 +64,7 @@ export default function HomePage() {
           padding: "10px",
         }}
       >
-        <img
-          src="/images/tree-silhouette.jpeg"
-          alt="木の画像"
-          style={{ maxWidth: "100%", maxHeight: "80%", borderRadius: "8px" }}
-        />
+        <PixijsForm />
       </Box>
 
       {/* 最新の日記 */}

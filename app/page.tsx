@@ -1,14 +1,11 @@
 "use client";
 
-// import HomeMain from "./home/page";
-import PixijsForm from "../components/PixijsForm";
+import HomeMain from "./home/page";
 
 export default function Home() {
   return (
-
     <>
       <HomeMain />
     </>
-
   );
 }
