@@ -78,7 +78,7 @@ export default function SignUpPage() {
     }
 
     // パスワードをハッシュ化
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // 成功したらSupabaseのusersテーブルに保存
     if (data.user) {
