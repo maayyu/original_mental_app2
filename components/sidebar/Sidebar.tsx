@@ -17,7 +17,7 @@ export default function Sidebar() {
 
   // メニュー項目
   const menuItems = [
-    { text: "今日の日記", path: "/diary" },
+    { text: "今日の日記", path: "/diary/input" },
     { text: "ストレスチェック", path: "/stress-check" },
     { text: "日記記録", path: "/datas" },
     { text: "使い方", path: "/how-to" },
