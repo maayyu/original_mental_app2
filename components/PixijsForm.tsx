@@ -40,7 +40,7 @@ const PixijsForm = () => {
     // カラーをランダムに取得する関数
     const getRandomPastelColor = () => {
       const randomIndex = Math.floor(
-        Math.random() * pastelRainbowColors.length
+        Math.random() * pastelRainbowColors.length,
       );
       return pastelRainbowColors[randomIndex];
     };
