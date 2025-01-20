@@ -47,6 +47,7 @@ export default function SignInPage() {
       setError("ユーザー名またはパスワードが間違っています。");
       return;
     }
+    console.log(message);
 
     // サインイン成功したらホーム画面へ遷移
     setLoading(false);
