@@ -6,29 +6,38 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@google/generative-ai": "^0.21.0",
+    "@material/web": "^2.2.0",
     "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
+    "@pixi/react": "^7.1.2",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.47.16",
+    "bcryptjs": "^2.4.3",
     "next": "15.1.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "pixi.js": "^7.4.2",
+    "punycode": "^2.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.2",
     "postcss": "^8",
+    "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

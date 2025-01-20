@@ -2,55 +2,72 @@
 "use client";
 
 import supabase from "@/lib/supabaseClient";
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import "./signin.css";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setMessage(null);
 
-    // Supabaseサインインの機能
-    const { error } = await supabase.auth.signInWithPassword({
+    if (!email) {
+      setError("ユーザー名が入力されていません");
+      return;
+    }
+    if (!password) {
+      setError("パスワードが入力されていません");
+      return;
+    }
+
+    // Supabaseでサインイン処理
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    // エラーの表示
     if (error) {
-      setError("メールアドレスまたはパスワードが間違っています");
-    } else {
-      setError(null);
-
-      router.push("/");
+      setLoading(false);
+      setError("ユーザー名またはパスワードが間違っています。");
+      return;
     }
+
+    if (!data) {
+      setLoading(false);
+      setError("ユーザー名またはパスワードが間違っています。");
+      return;
+    }
+    console.log(message);
+
+    // サインイン成功したらホーム画面へ遷移
+    setLoading(false);
+    router.push("/");
   };
 
   return (
-    <Container maxWidth="sm" className="container">
-      <Box>
-        <Typography>サインイン</Typography>
+    <div className="container">
+      <div className="signin-box">
+        <h1 className="signin-title">サインイン</h1>
 
-        <Box component="form" onSubmit={handleSignIn}>
+        <form onSubmit={handleSignIn} className="signin-form">
           <TextField
             label="メールアドレス"
             variant="outlined"
-            type="email"
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="signup-input"
+            fullWidth
           />
           <TextField
             label="パスワード"
@@ -59,14 +76,19 @@ export default function SignInPage() {
             margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="signin-input"
           />
 
-          {error && <Alert severity="error">{error}</Alert>}
+          {error && (
+            <Alert severity="error" className="alert error">
+              {error}
+            </Alert>
+          )}
 
-          <Button type="submit" variant="contained" color="primary">
-            Sign In
-          </Button>
-        </Box>
+          <button type="submit" className="signin-button">
+            {loading ? "処理中..." : "ログイン"}
+          </button>
+        </form>
         <Typography
           variant="body2"
           textAlign="center"
@@ -79,10 +101,10 @@ export default function SignInPage() {
             color="primary"
             onClick={() => router.push("/auth/sign-up")}
           >
-            Sign Up
+            アカウント作成へ
           </Button>
         </Typography>
-      </Box>
-    </Container>
+      </div>
+    </div>
   );
 }
