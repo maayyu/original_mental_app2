@@ -46,17 +46,13 @@ const PixijsForm = () => {
     };
 
     // 葉っぱを追加する関数
-    const addLeaf = () => {
+    const addLeaf = (posX, posY) => {
       const leafTexture = PIXI.Texture.from("/images/leaf.png");
       const leafSprite = new PIXI.Sprite(leafTexture);
 
-      // ランダムな位置（木の幹周辺に限定）
-      const minX = treeSprite.x - treeSprite.width / 4;
-      const maxX = treeSprite.x + treeSprite.width / 4;
-      const minY = treeSprite.y - treeSprite.height / 2 + 50;
-      const maxY = treeSprite.y - 50;
-      leafSprite.x = Math.random() * (maxX - minX) + minX;
-      leafSprite.y = Math.random() * (maxY - minY) + minY;
+      // クリック位置に設定
+      leafSprite.x = posX;
+      leafSprite.y = posY;
 
       // ランダムな回転
       leafSprite.rotation = Math.random() * Math.PI * 2; // 0〜360度の回転
@@ -79,7 +75,10 @@ const PixijsForm = () => {
 
     // クリックイベントで葉っぱを追加
     app.view.addEventListener("click", (event) => {
-      addLeaf();
+      const rect = app.view.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      addLeaf(x, y);
     });
 
     // クリーンアップ処理
