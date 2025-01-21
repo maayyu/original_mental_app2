@@ -104,22 +104,22 @@ export default function StressCheckPage() {
                   value="0"
                   control={<Radio />}
                   label="0: 全くない"
-                />{" "}
+                />
                 <FormControlLabel
                   value="1"
                   control={<Radio />}
                   label="1: ほとんどない"
-                />{" "}
+                />
                 <FormControlLabel
                   value="2"
                   control={<Radio />}
                   label="2: 時々ある"
-                />{" "}
+                />
                 <FormControlLabel
                   value="3"
                   control={<Radio />}
                   label="3: よくある"
-                />{" "}
+                />
                 <FormControlLabel
                   value="4"
                   control={<Radio />}
@@ -140,33 +140,29 @@ export default function StressCheckPage() {
       ) : (
         <Box>
           <Typography variant="h6" gutterBottom>
-            {" "}
-            結果{" "}
-          </Typography>{" "}
+            結果
+          </Typography>
           {answers.map((answer, index) => (
             <Typography variant="body1" key={index}>
-              {" "}
-              {questions[index]}: {answer}{" "}
+              {questions[index]}: {answer}
             </Typography>
-          ))}{" "}
+          ))}
           <Typography variant="h6" gutterBottom>
-            {" "}
-            ストレス度:{" "}
+            ストレス度:
             {(
               (answers.reduce((acc, answer) => acc + parseInt(answer, 10), 0) /
                 (questions.length * 4)) *
               100
             ).toFixed(0)}
-            %{" "}
-          </Typography>{" "}
+            %
+          </Typography>
           <Typography variant="h6" gutterBottom>
-            {" "}
-            ストレスレベル:{" "}
+            ストレスレベル:
             {getStressLevel(
               (answers.reduce((acc, answer) => acc + parseInt(answer, 10), 0) /
                 (questions.length * 4)) *
                 100
-            )}{" "}
+            )}
           </Typography>
         </Box>
       )}
