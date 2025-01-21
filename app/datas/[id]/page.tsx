@@ -6,6 +6,9 @@ import supabase from "@/lib/supabaseClient";
 import {
   Box,
   CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   List,
   ListItemText,
   Typography,
@@ -15,6 +18,7 @@ import React, { useEffect, useState } from "react";
 export default function DiaryEntryPage() {
   const [diaries, setDiaries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectDiary, setSelectDiary] = useState(null);
 
   useEffect(() => {
     // 日記データを取得
@@ -33,6 +37,14 @@ export default function DiaryEntryPage() {
     };
     fetchDiaries();
   }, []);
+
+  const handleDiaryClick = (diary) => {
+    setSelectDiary(diary);
+  };
+
+  const handleClose = () => {
+    setSelectDiary(null);
+  };
 
   return (
     <div>
@@ -57,7 +69,10 @@ export default function DiaryEntryPage() {
           <List>
             {diaries.map((diary) => (
               <React.Fragment key={diary.id}>
-                <ListItemText sx={{ paddingLeft: 0, paddingRight: 0 }}>
+                <ListItemText
+                  sx={{ paddingLeft: 0, paddingRight: 0, cursor: "pointer" }}
+                  onClick={() => handleDiaryClick(diary)}
+                >
                   <Box sx={{ width: "100%" }}>
                     <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                       {new Date(diary.created_at).toLocaleString("ja-JP", {
@@ -90,6 +105,44 @@ export default function DiaryEntryPage() {
           </List>
         )}
       </Box>
+
+      {/* 選択された日記詳細を表示する */}
+      <Dialog open={Boolean(selectDiary)} onClose={handleClose}>
+        <DialogTitle>日記の詳細</DialogTitle>
+        <DialogContent>
+          {selectDiary && (
+            <Box>
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                {" "}
+                {new Date(selectDiary.created_at).toLocaleString("ja-JP", {
+                  weekday: "short",
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: false,
+                })}{" "}
+              </Typography>{" "}
+              <Typography
+                variant="body2"
+                sx={{ marginTop: "8px", wordBreak: "break-word" }}
+              >
+                {" "}
+                <strong>日記内容:</strong> {selectDiary.content}{" "}
+              </Typography>{" "}
+              <Typography
+                variant="body2"
+                sx={{ marginTop: "8px", wordBreak: "break-word" }}
+              >
+                {" "}
+                <strong>変換後の日記内容:</strong>{" "}
+                {selectDiary.converted_content}{" "}
+              </Typography>
+            </Box>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
