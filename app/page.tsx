@@ -8,7 +8,7 @@ export default function TopPage() {
   return (
     <div className={styles.container}>
       <Image
-        src="/logo.png"
+        src="/images/logo.png"
         alt="Bright Balance Logo"
         width={200}
         height={200}
