@@ -9,8 +9,11 @@ import { usePathname } from "next/navigation";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
+  // サインイン、サインアップにヘッダーとサイドバーを非表示に（トップページも）
   const isAuthPage =
-    pathname === "/auth/sign-in" || pathname === "/auth/sign-up";
+    pathname === "/auth/sign-in" ||
+    pathname === "/auth/sign-up" ||
+    pathname === "/";
 
   return (
     <html>
