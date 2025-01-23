@@ -48,7 +48,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-center">
-        <h1 className="app-name">アプリ名</h1>
+        <h1 className="app-name">Bright Balance</h1>
       </div>
 
       <div className="header-right">
@@ -64,7 +64,6 @@ export default function Header() {
           </>
         ) : (
           <>
-            <span className="guest">ゲスト</span>
             <Link href="/auth/sign-in">
               <button className="login-button">ログイン</button>{" "}
             </Link>
