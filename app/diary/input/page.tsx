@@ -18,22 +18,22 @@ export default function DiaryInputPage() {
       }
       setLoading(true);
 
-      //   // 認証ユーザー情報の取得
-      //   const {
-      //     data: { user },
-      //     error: authError,
-      //   } = await supabase.auth.getUser();
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
-      //   if (authError || !user) {
-      //     alert("認証エラー: ログインしてください。");
-      //     setLoading(false);
-      //     return;
-      //   }
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
 
       //Supabaseに入力内容を保存
       const { data, error } = await supabase.from("diaries").insert([
         {
-          //   user_id: user.id,
+          user_id: user.id,
           content: inputText,
         },
       ]);
