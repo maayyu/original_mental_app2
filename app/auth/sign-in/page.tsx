@@ -51,7 +51,7 @@ export default function SignInPage() {
 
     // サインイン成功したらホーム画面へ遷移
     setLoading(false);
-    router.push("/");
+    router.push("/home");
   };
 
   return (
