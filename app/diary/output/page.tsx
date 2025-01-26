@@ -15,23 +15,23 @@ export default function DiaryOutputPage() {
     const fetchData = async () => {
       setLoading(true);
 
-      //   // 認証ユーザー情報の取得
-      //   const {
-      //     data: { user },
-      //     error: authError,
-      //   } = await supabase.auth.getUser();
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
-      //   if (authError || !user) {
-      //     alert("認証エラー: ログインしてください。");
-      //     setLoading(false);
-      //     return;
-      //   }
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
 
       //   最新の入力内容の取得
       const { data: diary, error: fetchError } = await supabase
         .from("diaries")
         .select("content, converted_content")
-        // .eq("user_id", user.id)
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
@@ -50,7 +50,7 @@ export default function DiaryOutputPage() {
         await supabase
           .from("diaries")
           .update({ converted_content: convertedContent })
-          //   .eq("user_id", user.id)
+          .eq("user_id", user.id)
           .order("created_at", { ascending: false })
           .limit(1);
 
