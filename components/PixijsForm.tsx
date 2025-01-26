@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
+import { getStressLevel } from "@/lib/stress/stressLevels";
 
 const PixijsForm = () => {
   const pixiContainer = useRef<HTMLDivElement | null>(null);
@@ -30,6 +31,7 @@ const PixijsForm = () => {
     // カラーの配列
     const pastelRainbowColors = [
       "#ff2137", // 赤
+      "#ff69b4", // ピンク
       "#ff9d2d", // オレンジ
       "#fefe51", // 黄色
       "#4ffd74", // 緑
@@ -40,7 +42,7 @@ const PixijsForm = () => {
     // カラーをランダムに取得する関数
     const getRandomPastelColor = () => {
       const randomIndex = Math.floor(
-        Math.random() * pastelRainbowColors.length,
+        Math.random() * pastelRainbowColors.length
       );
       return pastelRainbowColors[randomIndex];
     };
