@@ -5,6 +5,7 @@ import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Box } from "@mui/material";
 import { usePathname } from "next/navigation";
+import "@/app/globals.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

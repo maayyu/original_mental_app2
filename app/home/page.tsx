@@ -62,6 +62,7 @@ export default function HomePage() {
           borderRadius: "8px",
           marginBottom: "20px", // 下に余白を追加
           padding: "10px",
+          marginTop: "100px",
         }}
       >
         <PixijsForm />

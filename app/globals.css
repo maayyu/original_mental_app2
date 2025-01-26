@@ -37,7 +37,6 @@ html {
     ),
     url("/images/colorful-pattern.png");
   background-blend-mode: overlay, screen;
-  background-repeat: no-repeat;
   background-position: bottom center;
   background-size: 100% auto;
   font-family: Arial, sans-serif;
