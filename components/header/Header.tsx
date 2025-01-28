@@ -42,13 +42,13 @@ export default function Header() {
   };
 
   const handleHome = async () => {
-    router.push("/home");
+    router.push("/");
   };
 
   return (
     <header className="header">
       <div className="header-center">
-        <h1 className="app-name">Bright Balance</h1>
+        <h1 className="app-name">アプリ名</h1>
       </div>
 
       <div className="header-right">
@@ -59,12 +59,15 @@ export default function Header() {
           <>
             <div className="user-icon">{user.email.charAt(0)}</div>{" "}
             <button className="logout-button" onClick={handleLogout}>
-              ログアウト
+              {" "}
+              ログアウト{" "}
             </button>
           </>
         ) : (
           <>
+            <span className="guest">ゲスト</span>{" "}
             <Link href="/auth/sign-in">
+              {" "}
               <button className="login-button">ログイン</button>{" "}
             </Link>
           </>

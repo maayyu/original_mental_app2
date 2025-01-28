@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
-import { getStressLevel } from "@/lib/stress/stressLevels";
 
 const PixijsForm = () => {
   const pixiContainer = useRef<HTMLDivElement | null>(null);
@@ -31,7 +30,6 @@ const PixijsForm = () => {
     // カラーの配列
     const pastelRainbowColors = [
       "#ff2137", // 赤
-      "#ff69b4", // ピンク
       "#ff9d2d", // オレンジ
       "#fefe51", // 黄色
       "#4ffd74", // 緑
@@ -39,13 +37,12 @@ const PixijsForm = () => {
       "#a839fd", // 紫
     ];
 
-    // 葉っぱの色をストレスレベルに合わせて選択する
-    const getColorForStress = (stressLevel) => {
-      const index = Math.min(
-        Math.floor((stressLevel / 100) * (pastelRainbowColors.length - 1)),
-        pastelRainbowColors.length - 1
+    // カラーをランダムに取得する関数
+    const getRandomPastelColor = () => {
+      const randomIndex = Math.floor(
+        Math.random() * pastelRainbowColors.length,
       );
-      return pastelRainbowColors[index];
+      return pastelRainbowColors[randomIndex];
     };
 
     // 葉っぱを追加する関数
@@ -67,14 +64,12 @@ const PixijsForm = () => {
       // 中心にアンカーを設定
       leafSprite.anchor.set(0.5);
 
-      // ストレスレベルに合わせて葉っぱの色を決める
-      const stressLevel = await getStressLevel();
-      const color = getColorForStress(stressLevel);
-
       // カラーコードを16進数に変換する関数
       const hexToNumber = (hex) => parseInt(hex.replace("#", ""), 16);
-      leafSprite.tint = hexToNumber(color);
 
+      // ランダムなパステルカラーを適用
+      const randomColor = getRandomPastelColor();
+      leafSprite.tint = hexToNumber(randomColor);
       app.stage.addChild(leafSprite);
     };
 
