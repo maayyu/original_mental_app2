@@ -1,4 +1,4 @@
-// ストレスチェックのページ
+// ストレスチェック設問のページ
 "use client";
 
 import {
@@ -14,20 +14,22 @@ import {
 import React, { useEffect, useState } from "react";
 import supabase from "@/lib/supabaseClient";
 import { questionsByDay } from "@/lib/stress/questions";
+import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
 
 export default function StressCheckPage() {
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState(Array(7).fill(""));
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [answers, setAnswers] = useState(Array(7).fill(""));
   const [userId, setUserId] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserId = async () => {
-      const user = supabase.auth.getUser();
-      if (user) {
-        setUserId(user.id);
+      const response = await supabase.auth.getUser();
+      if (response.data.user) {
+        setUserId(response.data.user.id);
       }
     };
     fetchUserId();
@@ -53,7 +55,9 @@ export default function StressCheckPage() {
       (acc, answer) => acc + parseInt(answer, 10),
       0
     );
-    const percentageScore = (totalScore / (questions.length * 4)) * 100;
+    const percentageScore = Math.round(
+      (totalScore / (questions.length * 4)) * 100
+    );
     const stressLevel = getStressLevel(percentageScore);
 
     console.log("Total Score:", totalScore);
@@ -74,7 +78,13 @@ export default function StressCheckPage() {
     if (error) {
       console.log(error.message);
     } else {
-      setSubmitted(true);
+      const queryString = new URLSearchParams({
+        totalScore: totalScore.toString(),
+        percentageScore: percentageScore.toString(),
+        answers: JSON.stringify(answers),
+      }).toString();
+
+      router.push(`/stress-check/stress-check-result?${queryString}`);
     }
     setLoading(false);
   };
@@ -83,89 +93,59 @@ export default function StressCheckPage() {
     <Container>
       <Typography>ストレスチェック</Typography>
 
-      {!submitted ? (
-        <Box
-          component="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          {questions.map((question, index) => (
-            <FormControl
-              component="fieldset"
-              key={index}
-              fullWidth
-              sx={{ marginBottom: 2 }}
-            >
-              <Typography>{question} </Typography>
-              <RadioGroup onChange={(e) => handleChange(index, e.target.value)}>
-                <FormControlLabel
-                  value="0"
-                  control={<Radio />}
-                  label="0: 全くない"
-                />
-                <FormControlLabel
-                  value="1"
-                  control={<Radio />}
-                  label="1: ほとんどない"
-                />
-                <FormControlLabel
-                  value="2"
-                  control={<Radio />}
-                  label="2: 時々ある"
-                />
-                <FormControlLabel
-                  value="3"
-                  control={<Radio />}
-                  label="3: よくある"
-                />
-                <FormControlLabel
-                  value="4"
-                  control={<Radio />}
-                  label="4: いつもある"
-                />
-              </RadioGroup>
-            </FormControl>
-          ))}
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={loading || answers.includes("")}
+      <Box
+        component="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        {questions.map((question, index) => (
+          <FormControl
+            component="fieldset"
+            key={index}
+            fullWidth
+            sx={{ marginBottom: 2 }}
           >
-            採点
-          </Button>
-        </Box>
-      ) : (
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            結果
-          </Typography>
-          {answers.map((answer, index) => (
-            <Typography variant="body1" key={index}>
-              {questions[index]}: {answer}
-            </Typography>
-          ))}
-          <Typography variant="h6" gutterBottom>
-            ストレス度:
-            {(
-              (answers.reduce((acc, answer) => acc + parseInt(answer, 10), 0) /
-                (questions.length * 4)) *
-              100
-            ).toFixed(0)}
-            %
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            ストレスレベル:
-            {getStressLevel(
-              (answers.reduce((acc, answer) => acc + parseInt(answer, 10), 0) /
-                (questions.length * 4)) *
-                100
-            )}
-          </Typography>
-        </Box>
-      )}
+            <Typography>{question} </Typography>
+            <RadioGroup onChange={(e) => handleChange(index, e.target.value)}>
+              <FormControlLabel
+                value="0"
+                control={<Radio />}
+                label="0: 全くない"
+              />
+              <FormControlLabel
+                value="1"
+                control={<Radio />}
+                label="1: ほとんどない"
+              />
+              <FormControlLabel
+                value="2"
+                control={<Radio />}
+                label="2: 時々ある"
+              />
+              <FormControlLabel
+                value="3"
+                control={<Radio />}
+                label="3: よくある"
+              />
+              <FormControlLabel
+                value="4"
+                control={<Radio />}
+                label="4: いつもある"
+              />
+            </RadioGroup>
+          </FormControl>
+        ))}
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={loading || answers.includes("")}
+        >
+          採点
+        </Button>
+      </Box>
     </Container>
   );
 }
