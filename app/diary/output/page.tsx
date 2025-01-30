@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { geminiRun } from "@/lib/geminiClient";
 import supabase from "@/lib/supabaseClient";
+import "./output.css";
 
 export default function DiaryOutputPage() {
   const [data, setData] = useState<{
