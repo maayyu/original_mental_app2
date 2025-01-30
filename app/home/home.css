@@ -1,23 +1,7 @@
-body,
-html {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  background-image: linear-gradient(89deg, #88b2ea, #bbeceb, #b5dfb2, #8ff5a5),
-    radial-gradient(
-      circle at top right,
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0) 70%
-    ),
-    url("/images/colorful-pattern.png");
-  background-blend-mode: overlay, screen;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% auto;
-  font-family: Arial, sans-serif;
-  position: relative;
+.home-conteiner {
+  backdrop-filter: blur(20px) saturate(188%);
+  -webkit-backdrop-filter: blur(20px) saturate(188%);
+  background-color: rgba(116, 136, 181, 0.7);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
 }

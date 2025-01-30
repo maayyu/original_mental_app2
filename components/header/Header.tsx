@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./header.css";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
@@ -47,17 +48,24 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header-center">
+      <div className="header-left">
+        <Image
+          src="/images/logo.png"
+          alt="Bright Balance Logo"
+          width={50}
+          height={50}
+          className="header-log"
+        />
         <h1 className="app-name">Bright Balance</h1>
       </div>
 
       <div className="header-right">
         <button className="header-home" onClick={handleHome}>
           ホーム
-        </button>{" "}
+        </button>
         {user ? (
           <>
-            <div className="user-icon">{user.email.charAt(0)}</div>{" "}
+            <div className="user-icon">{user.email?.charAt(0)}</div>
             <button className="logout-button" onClick={handleLogout}>
               ログアウト
             </button>
@@ -65,7 +73,7 @@ export default function Header() {
         ) : (
           <>
             <Link href="/auth/sign-in">
-              <button className="login-button">ログイン</button>{" "}
+              <button className="login-button">ログイン</button>
             </Link>
           </>
         )}

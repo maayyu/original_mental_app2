@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {!isAuthPage && (
           <>
             <Header />
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Box
               component="main"
               sx={{

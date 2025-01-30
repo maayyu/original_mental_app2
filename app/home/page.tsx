@@ -47,7 +47,6 @@ export default function HomePage() {
         width: "100%",
         height: "100vh",
         boxSizing: "border-box",
-        backgroundColor: "#f5f5f5", // 背景色を追加
       }}
     >
       {/* メインビジュアル（木の画像） */}
