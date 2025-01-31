@@ -1,21 +1,12 @@
 // ストレスチェック設問のページ
 "use client";
 
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import supabase from "@/lib/supabaseClient";
 import { questionsByDay } from "@/lib/stress/questions";
 import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
+import "";
 
 export default function StressCheckPage() {
   const [questions, setQuestions] = useState([]);
@@ -90,62 +81,69 @@ export default function StressCheckPage() {
   };
 
   return (
-    <Container>
-      <Typography>ストレスチェック</Typography>
-
-      <Box
-        component="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        {questions.map((question, index) => (
-          <FormControl
-            component="fieldset"
-            key={index}
-            fullWidth
-            sx={{ marginBottom: 2 }}
-          >
-            <Typography>{question} </Typography>
-            <RadioGroup onChange={(e) => handleChange(index, e.target.value)}>
-              <FormControlLabel
+    <div className="container">
+      <h1>ストレスチェック</h1>
+      {questions.map((question, index) => (
+        <div key={index} className="output-box">
+          <h2>{question}</h2>
+          <div className="radioGroup">
+            <label>
+              <input
+                type="radio"
+                name={`question-${index}`}
                 value="0"
-                control={<Radio />}
-                label="0: 全くない"
+                onChange={(e) => handleChange(index, e.target.value)}
               />
-              <FormControlLabel
+              0: 全くない
+            </label>
+            <label>
+              <input
+                type="radio"
+                name={`question-${index}`}
                 value="1"
-                control={<Radio />}
-                label="1: ほとんどない"
+                onChange={(e) => handleChange(index, e.target.value)}
               />
-              <FormControlLabel
+              1: ほとんどない
+            </label>
+            <label>
+              <input
+                type="radio"
+                name={`question-${index}`}
                 value="2"
-                control={<Radio />}
-                label="2: 時々ある"
+                onChange={(e) => handleChange(index, e.target.value)}
               />
-              <FormControlLabel
+              2: 時々ある
+            </label>
+            <label>
+              <input
+                type="radio"
+                name={`question-${index}`}
                 value="3"
-                control={<Radio />}
-                label="3: よくある"
+                onChange={(e) => handleChange(index, e.target.value)}
               />
-              <FormControlLabel
+              3: よくある
+            </label>
+            <label>
+              <input
+                type="radio"
+                name={`question-${index}`}
                 value="4"
-                control={<Radio />}
-                label="4: いつもある"
+                onChange={(e) => handleChange(index, e.target.value)}
               />
-            </RadioGroup>
-          </FormControl>
-        ))}
-        <Button
-          variant="contained"
-          color="primary"
+              4: いつもある
+            </label>
+          </div>
+        </div>
+      ))}
+      <div className="output-box">
+        <button
           type="submit"
           disabled={loading || answers.includes("")}
+          className="button"
         >
           採点
-        </Button>
-      </Box>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }
