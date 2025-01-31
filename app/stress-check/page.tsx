@@ -6,7 +6,6 @@ import supabase from "@/lib/supabaseClient";
 import { questionsByDay } from "@/lib/stress/questions";
 import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
-import "";
 
 export default function StressCheckPage() {
   const [questions, setQuestions] = useState([]);
@@ -92,6 +91,7 @@ export default function StressCheckPage() {
                 type="radio"
                 name={`question-${index}`}
                 value="0"
+                required
                 onChange={(e) => handleChange(index, e.target.value)}
               />
               0: 全くない
@@ -101,6 +101,7 @@ export default function StressCheckPage() {
                 type="radio"
                 name={`question-${index}`}
                 value="1"
+                required
                 onChange={(e) => handleChange(index, e.target.value)}
               />
               1: ほとんどない
@@ -110,6 +111,7 @@ export default function StressCheckPage() {
                 type="radio"
                 name={`question-${index}`}
                 value="2"
+                required
                 onChange={(e) => handleChange(index, e.target.value)}
               />
               2: 時々ある
@@ -119,6 +121,7 @@ export default function StressCheckPage() {
                 type="radio"
                 name={`question-${index}`}
                 value="3"
+                required
                 onChange={(e) => handleChange(index, e.target.value)}
               />
               3: よくある
@@ -128,6 +131,7 @@ export default function StressCheckPage() {
                 type="radio"
                 name={`question-${index}`}
                 value="4"
+                required
                 onChange={(e) => handleChange(index, e.target.value)}
               />
               4: いつもある
@@ -139,6 +143,7 @@ export default function StressCheckPage() {
         <button
           type="submit"
           disabled={loading || answers.includes("")}
+          onClick={handleSubmit}
           className="button"
         >
           採点
