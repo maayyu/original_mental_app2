@@ -36,7 +36,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      router.push("/auth/sign-in");
+      router.push("/auth");
     } catch (error) {
       console.log("ログアウトに失敗", error);
     }

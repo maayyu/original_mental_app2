@@ -1,3 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 /* コンテナ */
 .container {
   display: flex;
@@ -7,11 +18,11 @@
   width: 100%;
 }
 
-/* サインアップボックス */
-.signup-box {
-  background-color: rgba(255, 255, 255, 0.8);
+/* サインアップとサインインの共通ボックス */
+.auth-box {
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   width: 100%;
   max-width: 400px;
@@ -21,22 +32,23 @@
 }
 
 /* タイトル */
-.signup-title {
+.auth-title {
   margin-bottom: 1.5rem;
   font-weight: bold;
   color: #333333;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* フォーム */
-.signup-form {
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
 /* 入力フィールド */
-.signup-input {
+.auth-input {
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
@@ -63,7 +75,7 @@
 }
 
 /* ボタン */
-.signup-button {
+.auth-button {
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: bold;
@@ -76,7 +88,7 @@
   transition: background-color 0.3s ease;
 }
 
-.signup-button:hover {
+.auth-button:hover {
   background-color: #007bb5;
 }
 
@@ -94,6 +106,9 @@
   font-size: 1rem;
   color: #56a8ff;
   font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
   text-decoration: none;
 }
 

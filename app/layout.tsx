@@ -11,10 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   // サインイン、サインアップにヘッダーとサイドバーを非表示に（トップページも）
-  const isAuthPage =
-    pathname === "/auth/sign-in" ||
-    pathname === "/auth/sign-up" ||
-    pathname === "/";
+  const isAuthPage = pathname === "/auth" || pathname === "/";
 
   return (
     <html>

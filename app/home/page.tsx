@@ -57,11 +57,10 @@ export default function HomePage() {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "8px",
+          borderRadius: "13px",
           marginBottom: "20px", // 下に余白を追加
           padding: "10px",
-          marginTop: "100px",
+          marginTop: "180px",
         }}
       >
         <PixijsForm />
