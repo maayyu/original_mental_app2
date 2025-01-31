@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { Alert, TextField } from "@mui/material";
 import "./auth.css";
-import Link from "next/link";
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -136,7 +135,7 @@ export default function AuthPage() {
     <div className="container">
       <div className="auth-box">
         <h1 className="auth-title">
-          {isSignUp ? "アカウント作成" : "サインイン"}
+          {isSignUp ? "アカウント作成" : "ログイン"}
         </h1>
         <form onSubmit={handleAuth} className="auth-form">
           {isSignUp && (
@@ -191,7 +190,7 @@ export default function AuthPage() {
             onClick={() => setIsSignUp(!isSignUp)}
             className="signin-link"
           >
-            {isSignUp ? "サインイン" : "サインアップ"}
+            {isSignUp ? "ログイン" : "登録へ"}
           </button>
         </div>
       </div>

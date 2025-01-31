@@ -18,12 +18,10 @@ export default function TopPage() {
         <h1 className={styles.title}>Bright Balance</h1>
         <p className={styles.tagline}>～日記で整える、心と生活～</p>
       </div>
+
       <div className={styles.buttons}>
-        <Link href="/auth/sign-in">
-          <button className={styles.button}>ログイン</button>
-        </Link>
-        <Link href="/auth/sign-up">
-          <button className={styles.button}>サインアップ</button>
+        <Link href="/auth">
+          <button className={styles.button}>ログイン/サインアップ</button>
         </Link>
       </div>
     </div>
