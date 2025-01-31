@@ -72,7 +72,7 @@ export default function Header() {
           </>
         ) : (
           <>
-            <Link href="/auth/sign-in">
+            <Link href="/auth">
               <button className="login-button">ログイン</button>
             </Link>
           </>

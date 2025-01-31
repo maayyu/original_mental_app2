@@ -42,3 +42,13 @@ p {
   color: #333;
   line-height: 1.6;
 }
+
+.home-back {
+  background: linear-gradient(45deg, #4facfe, #005dfe);
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: 0.3s;
+}

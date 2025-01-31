@@ -32,10 +32,6 @@ export default function AuthPage() {
       setError("パスワードが入力されていません");
       return;
     }
-    if (!username) {
-      setError("ユーザー名が入力されていません");
-      return;
-    }
 
     setLoading(true);
 

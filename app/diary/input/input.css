@@ -34,6 +34,7 @@ p {
 
 .button {
   margin-top: 1rem;
+  width: 20%;
   padding: 0.8rem 3rem;
   font-size: 1.2rem;
   font-weight: bold;
