@@ -1,0 +1,74 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.output-box {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  background: #e9f5ff;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.radioGroup input {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.radioGroup label:hover {
+  background: #cde9ff;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.button:hover:not(:disabled) {
+  background: #0056b3;
+}

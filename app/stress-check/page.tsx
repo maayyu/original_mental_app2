@@ -6,6 +6,7 @@ import supabase from "@/lib/supabaseClient";
 import { questionsByDay } from "@/lib/stress/questions";
 import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
+import "./stress.css";
 
 export default function StressCheckPage() {
   const [questions, setQuestions] = useState([]);
@@ -86,56 +87,27 @@ export default function StressCheckPage() {
         <div key={index} className="output-box">
           <h2>{question}</h2>
           <div className="radioGroup">
-            <label>
-              <input
-                type="radio"
-                name={`question-${index}`}
-                value="0"
-                required
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-              0: 全くない
-            </label>
-            <label>
-              <input
-                type="radio"
-                name={`question-${index}`}
-                value="1"
-                required
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-              1: ほとんどない
-            </label>
-            <label>
-              <input
-                type="radio"
-                name={`question-${index}`}
-                value="2"
-                required
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-              2: 時々ある
-            </label>
-            <label>
-              <input
-                type="radio"
-                name={`question-${index}`}
-                value="3"
-                required
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-              3: よくある
-            </label>
-            <label>
-              <input
-                type="radio"
-                name={`question-${index}`}
-                value="4"
-                required
-                onChange={(e) => handleChange(index, e.target.value)}
-              />
-              4: いつもある
-            </label>
+            {[0, 1, 2, 3, 4].map((value) => (
+              <label key={value}>
+                <input
+                  type="radio"
+                  name={`question-${index}`}
+                  value={value}
+                  required
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+                {value}:{" "}
+                {
+                  [
+                    "全くない",
+                    "ほとんどない",
+                    "時々ある",
+                    "よくある",
+                    "いつもある",
+                  ][value]
+                }
+              </label>
+            ))}
           </div>
         </div>
       ))}

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
+import "./stressResult.css";
 
 export default function StressCheckResultPage() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function StressCheckResultPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>ストレスチェック結果</h1>
       <p>合計スコア: {totalScore}</p>
       <p>ストレス度: {percentageScore}%</p>
@@ -38,7 +39,9 @@ export default function StressCheckResultPage() {
           </li>
         ))}
       </ul>
-      <button onClick={handleHome}>ホーム画面へ</button>
+      <button onClick={handleHome} className="button">
+        ホーム画面へ
+      </button>
     </div>
   );
 }
