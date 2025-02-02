@@ -1,16 +1,8 @@
 "use client";
 
 import React from "react";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from "@mui/material";
 import { useRouter } from "next/navigation";
+import "./sidebar.css";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -24,21 +16,20 @@ export default function Sidebar() {
   ];
 
   return (
-    <Drawer variant="permanent">
-      <Toolbar>
-        <Typography variant="h6" noWrap component="div">
-          メニュー
-        </Typography>
-      </Toolbar>
-      <List>
+    <nav className="sidebar">
+      <h2 className="sidebarTitle">メニュー</h2>
+      <ul className="menuList">
         {menuItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => router.push(item.path)}>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
+          <li key={index} className="menuItem">
+            <button
+              className="menuButton"
+              onClick={() => router.push(item.path)}
+            >
+              {item.text}
+            </button>
+          </li>
         ))}
-      </List>
-    </Drawer>
+      </ul>
+    </nav>
   );
 }

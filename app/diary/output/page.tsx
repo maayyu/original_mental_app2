@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { geminiRun } from "@/lib/geminiClient";
 import supabase from "@/lib/supabaseClient";
+import "./output.css";
+import Link from "next/link";
 
 export default function DiaryOutputPage() {
   const [data, setData] = useState<{
@@ -81,6 +83,9 @@ export default function DiaryOutputPage() {
         <h2>ポジティブ変換結果</h2>
         <p>{data?.converted_content}</p>
       </div>
+      <Link href="/home">
+        <button className="home-back">葉っぱを付けてみよう</button>
+      </Link>
     </div>
   );
 }

@@ -3,17 +3,8 @@
 "use client";
 
 import supabase from "@/lib/supabaseClient";
-import {
-  Box,
-  CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  List,
-  ListItemText,
-  Typography,
-} from "@mui/material";
 import React, { useEffect, useState } from "react";
+import "./datas.css";
 
 export default function DiaryEntryPage() {
   const [diaries, setDiaries] = useState([]);
@@ -23,9 +14,23 @@ export default function DiaryEntryPage() {
   useEffect(() => {
     // 日記データを取得
     const fetchDiaries = async () => {
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
+
+      // ログインユーザーのデータのみ取得
       const { data, error } = await supabase
         .from("diaries")
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -47,74 +52,21 @@ export default function DiaryEntryPage() {
   };
 
   return (
-    <div>
+    <div className="diary-container">
       {/* 日記の詳細を表示するためのコンテンツ */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "900px", // 最大幅を設定
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          padding: "16px",
-          boxSizing: "border-box",
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          最新の日記
-        </Typography>
-        {loading ? (
-          <CircularProgress sx={{ display: "block", margin: "0 auto" }} />
-        ) : (
-          <List>
-            {diaries.map((diary) => (
-              <React.Fragment key={diary.id}>
-                <ListItemText
-                  sx={{ paddingLeft: 0, paddingRight: 0, cursor: "pointer" }}
-                  onClick={() => handleDiaryClick(diary)}
-                >
-                  <Box sx={{ width: "100%" }}>
-                    <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                      {new Date(diary.created_at).toLocaleString("ja-JP", {
-                        weekday: "short",
-                        year: "numeric",
-                        month: "numeric",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: false,
-                      })}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ marginTop: "8px", wordBreak: "break-word" }}
-                    >
-                      <strong>日記内容:</strong> {diary.content}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ marginTop: "8px", wordBreak: "break-word" }}
-                    >
-                      <strong>変換後の日記内容:</strong>{" "}
-                      {diary.converted_content}
-                    </Typography>
-                  </Box>
-                </ListItemText>
-              </React.Fragment>
-            ))}
-          </List>
-        )}
-      </Box>
-
-      {/* 選択された日記詳細を表示する */}
-      <Dialog open={Boolean(selectDiary)} onClose={handleClose}>
-        <DialogTitle>日記の詳細</DialogTitle>
-        <DialogContent>
-          {selectDiary && (
-            <Box>
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                {" "}
-                {new Date(selectDiary.created_at).toLocaleString("ja-JP", {
+      <h2>最新の日記</h2>
+      {loading ? (
+        <p>読み込み中...</p>
+      ) : (
+        <ul className="diary-list">
+          {diaries.map((diary) => (
+            <li
+              key={diary.id}
+              onClick={() => handleDiaryClick(diary)}
+              className="diary-item"
+            >
+              <p className="diary-date">
+                {new Date(diary.created_at).toLocaleString("ja-JP", {
                   weekday: "short",
                   year: "numeric",
                   month: "numeric",
@@ -122,27 +74,47 @@ export default function DiaryEntryPage() {
                   hour: "numeric",
                   minute: "numeric",
                   hour12: false,
-                })}{" "}
-              </Typography>{" "}
-              <Typography
-                variant="body2"
-                sx={{ marginTop: "8px", wordBreak: "break-word" }}
-              >
-                {" "}
-                <strong>日記内容:</strong> {selectDiary.content}{" "}
-              </Typography>{" "}
-              <Typography
-                variant="body2"
-                sx={{ marginTop: "8px", wordBreak: "break-word" }}
-              >
-                {" "}
-                <strong>変換後の日記内容:</strong>{" "}
-                {selectDiary.converted_content}{" "}
-              </Typography>
-            </Box>
-          )}
-        </DialogContent>
-      </Dialog>
+                })}
+              </p>
+              <p className="diary-content">
+                <strong>日記内容:</strong> {diary.content}
+              </p>
+              <p className="diary-converted">
+                <strong>変換後の日記内容:</strong> {diary.converted_content}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* 選択された日記詳細を表示する */}
+      {selectDiary && (
+        <div className="modal-overlay" onClick={handleClose}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>
+              ×
+            </button>
+            <h3>日記の詳細</h3>
+            <p className="diary-date">
+              {new Date(selectDiary.created_at).toLocaleString("ja-JP", {
+                weekday: "short",
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+              })}
+            </p>
+            <p className="diary-content">
+              <strong>日記内容:</strong> {selectDiary.content}
+            </p>
+            <p className="diary-converted">
+              <strong>変換後の日記内容:</strong> {selectDiary.converted_content}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

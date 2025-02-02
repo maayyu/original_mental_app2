@@ -3,6 +3,7 @@
 import supabase from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
+import "./input.css";
 
 export default function DiaryInputPage() {
   const inputRef = useRef<HTMLTextAreaElement>(null);

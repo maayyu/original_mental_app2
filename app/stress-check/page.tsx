@@ -1,21 +1,12 @@
 // ストレスチェック設問のページ
 "use client";
 
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import supabase from "@/lib/supabaseClient";
 import { questionsByDay } from "@/lib/stress/questions";
 import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
+import "./stress.css";
 
 export default function StressCheckPage() {
   const [questions, setQuestions] = useState([]);
@@ -90,62 +81,46 @@ export default function StressCheckPage() {
   };
 
   return (
-    <Container>
-      <Typography>ストレスチェック</Typography>
-
-      <Box
-        component="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
-        {questions.map((question, index) => (
-          <FormControl
-            component="fieldset"
-            key={index}
-            fullWidth
-            sx={{ marginBottom: 2 }}
-          >
-            <Typography>{question} </Typography>
-            <RadioGroup onChange={(e) => handleChange(index, e.target.value)}>
-              <FormControlLabel
-                value="0"
-                control={<Radio />}
-                label="0: 全くない"
-              />
-              <FormControlLabel
-                value="1"
-                control={<Radio />}
-                label="1: ほとんどない"
-              />
-              <FormControlLabel
-                value="2"
-                control={<Radio />}
-                label="2: 時々ある"
-              />
-              <FormControlLabel
-                value="3"
-                control={<Radio />}
-                label="3: よくある"
-              />
-              <FormControlLabel
-                value="4"
-                control={<Radio />}
-                label="4: いつもある"
-              />
-            </RadioGroup>
-          </FormControl>
-        ))}
-        <Button
-          variant="contained"
-          color="primary"
+    <div className="container">
+      <h1>ストレスチェック</h1>
+      {questions.map((question, index) => (
+        <div key={index} className="output-box">
+          <h2>{question}</h2>
+          <div className="radioGroup">
+            {[0, 1, 2, 3, 4].map((value) => (
+              <label key={value}>
+                <input
+                  type="radio"
+                  name={`question-${index}`}
+                  value={value}
+                  required
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+                {value}:{" "}
+                {
+                  [
+                    "全くない",
+                    "ほとんどない",
+                    "時々ある",
+                    "よくある",
+                    "いつもある",
+                  ][value]
+                }
+              </label>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="output-box">
+        <button
           type="submit"
           disabled={loading || answers.includes("")}
+          onClick={handleSubmit}
+          className="button"
         >
           採点
-        </Button>
-      </Box>
-    </Container>
+        </button>
+      </div>
+    </div>
   );
 }

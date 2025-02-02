@@ -20,9 +20,23 @@ export default function HomePage() {
   useEffect(() => {
     // 最新5日分の日記データを取得
     const fetchDiaries = async () => {
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
+
+      // ログインユーザーのデータのみ取得
       const { data, error } = await supabase
         .from("diaries")
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(5);
 
@@ -47,7 +61,6 @@ export default function HomePage() {
         width: "100%",
         height: "100vh",
         boxSizing: "border-box",
-        backgroundColor: "#f5f5f5", // 背景色を追加
       }}
     >
       {/* メインビジュアル（木の画像） */}
@@ -58,11 +71,10 @@ export default function HomePage() {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "8px",
+          borderRadius: "13px",
           marginBottom: "20px", // 下に余白を追加
           padding: "10px",
-          marginTop: "100px",
+          marginTop: "180px",
         }}
       >
         <PixijsForm />

@@ -1,14 +1,71 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as PIXI from "pixi.js";
-import { getStressLevel } from "@/lib/stress/stressLevels";
+import supabase from "@/lib/supabaseClient";
 
 const PixijsForm = () => {
   const pixiContainer = useRef<HTMLDivElement | null>(null);
+  const [stressLevel, setStressLevel] = useState<number | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [leaves, setLeaves] = useState<
+    { x: number; y: number; color: string; rotation: number }[]
+  >([]);
+  const [addedStressLevels, setAddedStressLevels] = useState<Set<number>>(
+    new Set()
+  );
 
   useEffect(() => {
-    if (!pixiContainer.current) return;
+    const fetchStressLevel = async () => {
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        return;
+      }
+
+      setUserId(user.id); // ユーザーIDを保存
+
+      // 最新のストレススコアを取得
+      const { data, error } = await supabase
+        .from("stress_checks")
+        .select("total_score")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error) {
+        console.error("ストレスレベルの取得に失敗しました", error);
+        return;
+      }
+
+      setStressLevel(data.total_score);
+
+      // 過去の葉っぱ情報を取得
+      const { data: leavesData, error: leavesError } = await supabase
+        .from("leaves")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: true });
+
+      if (leavesError) {
+        console.error("葉っぱ情報の取得に失敗しました", leavesError);
+        return;
+      }
+
+      setLeaves(leavesData);
+    };
+
+    fetchStressLevel();
+  }, []);
+
+  useEffect(() => {
+    if (!pixiContainer.current || stressLevel === null || !userId) return;
 
     // PixiJS のアプリケーションを作成
     const app = new PIXI.Application({
@@ -18,6 +75,7 @@ const PixijsForm = () => {
     });
 
     // PixiJS のビューを DOM に追加
+    pixiContainer.current.innerHTML = "";
     pixiContainer.current.appendChild(app.view);
 
     // 木の画像を追加
@@ -28,28 +86,40 @@ const PixijsForm = () => {
     treeSprite.y = app.renderer.height / 2 + 100;
     app.stage.addChild(treeSprite);
 
-    // カラーの配列
-    const pastelRainbowColors = [
-      "#ff2137", // 赤
-      "#ff69b4", // ピンク
-      "#ff9d2d", // オレンジ
-      "#fefe51", // 黄色
-      "#4ffd74", // 緑
-      "#2ba3ff", // 青
-      "#a839fd", // 紫
-    ];
-
     // 葉っぱの色をストレスレベルに合わせて選択する
-    const getColorForStress = (stressLevel) => {
-      const index = Math.min(
-        Math.floor((stressLevel / 100) * (pastelRainbowColors.length - 1)),
-        pastelRainbowColors.length - 1
-      );
-      return pastelRainbowColors[index];
+    const getColorForStress = (totalScore: number | null) => {
+      if (totalScore === null || totalScore === undefined) {
+        console.warn("total_scoreが未定義のため、デフォルト色を適用します。");
+        return "#4ffd74"; // デフォルト（緑）
+      }
+
+      if (totalScore >= 86) return "#ff2137"; // 赤
+      if (totalScore >= 72) return "#ff69b4"; // ピンク
+      if (totalScore >= 58) return "#ff9d2d"; // オレンジ
+      if (totalScore >= 43) return "#fefe51"; // 黄色
+      if (totalScore >= 29) return "#4ffd74"; // 緑
+      if (totalScore >= 15) return "#a839fd"; // 紫
+      return "#2ba3ff"; // 青（0～14）
     };
 
     // 葉っぱを追加する関数
-    const addLeaf = (posX, posY) => {
+    const addLeaf = (
+      posX: number,
+      posY: number,
+      color: string,
+      rotation: number
+    ) => {
+      console.log(
+        "葉っぱを追加: X=",
+        posX,
+        " Y=",
+        posY,
+        " 色=",
+        color,
+        " 回転=",
+        rotation
+      );
+
       const leafTexture = PIXI.Texture.from("/images/leaf.png");
       const leafSprite = new PIXI.Sprite(leafTexture);
 
@@ -58,7 +128,7 @@ const PixijsForm = () => {
       leafSprite.y = posY;
 
       // ランダムな回転
-      leafSprite.rotation = Math.random() * Math.PI * 2; // 0〜360度の回転
+      leafSprite.rotation = rotation;
 
       // 葉っぱのサイズ調整
       const scale = Math.random() * 0 + 0.15;
@@ -67,30 +137,71 @@ const PixijsForm = () => {
       // 中心にアンカーを設定
       leafSprite.anchor.set(0.5);
 
-      // ストレスレベルに合わせて葉っぱの色を決める
-      const stressLevel = await getStressLevel();
-      const color = getColorForStress(stressLevel);
-
-      // カラーコードを16進数に変換する関数
-      const hexToNumber = (hex) => parseInt(hex.replace("#", ""), 16);
-      leafSprite.tint = hexToNumber(color);
+      // 色を設定
+      leafSprite.tint = parseInt(color.replace("#", "0x"), 16);
 
       app.stage.addChild(leafSprite);
     };
 
-    // クリックイベントで葉っぱを追加
-    app.view.addEventListener("click", (event) => {
+    // 既存の葉っぱを描画
+    leaves.forEach((leaf) => {
+      addLeaf(leaf.x, leaf.y, leaf.color, leaf.rotation);
+    });
+
+    // 新しい葉っぱを追加し、データベースに保存
+    const handleLeafClick = async (event: MouseEvent) => {
+      // ストレスレベルに対して既に葉っぱが追加されていれば、何もせず終了
+      if (addedStressLevels.has(stressLevel)) {
+        console.log("既にこのストレスレベルに対して葉っぱが追加されています。");
+        alert("今日の分は追加済です、明日も継続しましょう");
+        return;
+      }
+
       const rect = app.view.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      addLeaf(x, y);
-    });
+      const color = getColorForStress(stressLevel);
+      const rotation = Math.random() * Math.PI * 2;
+
+      console.log("追加する葉っぱの色:", color, "回転角度:", rotation);
+
+      addLeaf(x, y, color, rotation);
+
+      if (userId) {
+        const { error: insertError } = await supabase.from("leaves").insert([
+          {
+            user_id: userId,
+            x,
+            y,
+            rotation,
+            color,
+            created_at: new Date(),
+          },
+        ]);
+
+        if (insertError) {
+          console.error("葉っぱ情報の保存に失敗しました", insertError);
+        }
+        // 追加済みのストレスレベルを管理
+        else {
+          setAddedStressLevels((prev) => new Set(prev).add(stressLevel));
+
+          // 新しい葉っぱ情報を状態に追加して再描画
+          setLeaves((prevLeaves) => [...prevLeaves, { x, y, color, rotation }]);
+        }
+      }
+    };
+
+    app.view.addEventListener("click", handleLeafClick);
 
     // クリーンアップ処理
     return () => {
+      if (app && app.view) {
+        app.view.removeEventListener("click", handleLeafClick);
+      }
       app.destroy(true, true);
     };
-  }, []);
+  }, [leaves, stressLevel, userId, addedStressLevels]);
 
   return <div ref={pixiContainer}></div>;
 };
