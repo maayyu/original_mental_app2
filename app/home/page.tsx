@@ -20,11 +20,25 @@ export default function HomePage() {
   useEffect(() => {
     // 最新5日分の日記データを取得
     const fetchDiaries = async () => {
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
+
+      // ログインユーザーのデータのみ取得
       const { data, error } = await supabase
         .from("diaries")
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (error) {
         console.error("Error fetching diaries: ", error.message);
@@ -42,12 +56,11 @@ export default function HomePage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center", // 中央に配置
+        justifyContent: "center",
         padding: "30px",
         width: "100%",
         height: "100vh",
         boxSizing: "border-box",
-        backgroundColor: "#f5f5f5", // 背景色を追加
       }}
     >
       {/* メインビジュアル（木の画像） */}
@@ -58,10 +71,10 @@ export default function HomePage() {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "8px",
-          marginBottom: "20px", // 下に余白を追加
+          borderRadius: "13px",
+          marginBottom: "20px",
           padding: "10px",
+          marginTop: "180px",
         }}
       >
         <PixijsForm />
@@ -71,7 +84,7 @@ export default function HomePage() {
       <Box
         sx={{
           width: "100%",
-          maxWidth: "900px", // 最大幅を設定
+          maxWidth: "900px",
           backgroundColor: "rgba(255, 255, 255, 0.8)",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -84,6 +97,10 @@ export default function HomePage() {
         </Typography>
         {loading ? (
           <CircularProgress sx={{ display: "block", margin: "0 auto" }} />
+        ) : diaries.length === 0 ? (
+          <Typography variant="body1" sx={{ textAlign: "center" }}>
+            現在、保存されている日記がありません。
+          </Typography>
         ) : (
           <List>
             {diaries.map((diary) => (

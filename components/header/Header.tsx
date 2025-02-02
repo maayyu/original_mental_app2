@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./header.css";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
@@ -35,40 +36,44 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      router.push("/auth/sign-in");
+      router.push("/auth");
     } catch (error) {
       console.log("ログアウトに失敗", error);
     }
   };
 
   const handleHome = async () => {
-    router.push("/");
+    router.push("/home");
   };
 
   return (
     <header className="header">
-      <div className="header-center">
-        <h1 className="app-name">アプリ名</h1>
+      <div className="header-left">
+        <Image
+          src="/images/logo.png"
+          alt="Bright Balance Logo"
+          width={50}
+          height={50}
+          className="header-log"
+        />
+        <h1 className="app-name">Bright Balance</h1>
       </div>
 
       <div className="header-right">
         <button className="header-home" onClick={handleHome}>
           ホーム
-        </button>{" "}
+        </button>
         {user ? (
           <>
-            <div className="user-icon">{user.email.charAt(0)}</div>{" "}
+            <div className="user-icon">{user.email?.charAt(0)}</div>
             <button className="logout-button" onClick={handleLogout}>
-              {" "}
-              ログアウト{" "}
+              ログアウト
             </button>
           </>
         ) : (
           <>
-            <span className="guest">ゲスト</span>{" "}
-            <Link href="/auth/sign-in">
-              {" "}
-              <button className="login-button">ログイン</button>{" "}
+            <Link href="/auth">
+              <button className="login-button">ログイン</button>
             </Link>
           </>
         )}
