@@ -33,7 +33,7 @@ export default function DiaryOutputPage() {
       const { data: diary, error: fetchError } = await supabase
         .from("diaries")
         .select("content, converted_content")
-        .eq("user_id", user.id)
+        // .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
