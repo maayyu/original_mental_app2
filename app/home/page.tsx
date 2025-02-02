@@ -20,9 +20,23 @@ export default function HomePage() {
   useEffect(() => {
     // 最新5日分の日記データを取得
     const fetchDiaries = async () => {
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
+
+      // ログインユーザーのデータのみ取得
       const { data, error } = await supabase
         .from("diaries")
         .select("*")
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(5);
 
