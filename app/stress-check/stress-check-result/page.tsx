@@ -40,7 +40,7 @@ export default function StressCheckResultPage() {
         ))}
       </ul>
       <button onClick={handleHome} className="button">
-        ホーム画面へ
+        葉っぱを付けてみよう
       </button>
     </div>
   );

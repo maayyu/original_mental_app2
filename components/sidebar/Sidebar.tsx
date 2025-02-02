@@ -12,7 +12,7 @@ export default function Sidebar() {
     { text: "今日の日記", path: "/diary/input" },
     { text: "ストレスチェック", path: "/stress-check" },
     { text: "日記記録", path: "/datas/${id}" },
-    { text: "使い方", path: "/how-to" },
+    // { text: "使い方", path: "/how-to" },
   ];
 
   return (

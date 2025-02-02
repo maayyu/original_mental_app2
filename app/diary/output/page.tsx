@@ -84,7 +84,7 @@ export default function DiaryOutputPage() {
         <p>{data?.converted_content}</p>
       </div>
       <Link href="/home">
-        <button className="home-back">葉っぱを付けてみよう</button>
+        <button className="home-back">ホームへ</button>
       </Link>
     </div>
   );

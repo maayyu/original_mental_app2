@@ -14,6 +14,7 @@ const PixijsForm = () => {
   const [addedStressLevels, setAddedStressLevels] = useState<Set<number>>(
     new Set()
   );
+  const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchStressLevel = async () => {
@@ -33,18 +34,26 @@ const PixijsForm = () => {
       // 最新のストレススコアを取得
       const { data, error } = await supabase
         .from("stress_checks")
-        .select("total_score")
+        .select("percentage_score")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
 
       if (error) {
-        console.error("ストレスレベルの取得に失敗しました", error);
+        if (error.code === "PGRST116") {
+          console.warn(
+            "ストレスレベルのデータが見つかりません。デフォルト値を設定します。"
+          );
+          setStressLevel(0);
+          alert("ストレスチェックを受けてみましょう。");
+        } else {
+          console.error("ストレスレベルの取得に失敗しました", error);
+        }
         return;
       }
 
-      setStressLevel(data.total_score);
+      setStressLevel(data.percentage_score);
 
       // 過去の葉っぱ情報を取得
       const { data: leavesData, error: leavesError } = await supabase
@@ -59,6 +68,12 @@ const PixijsForm = () => {
       }
 
       setLeaves(leavesData);
+
+      if (leavesData.length > 0) {
+        setIsEmpty(false);
+      } else {
+        setIsEmpty(true);
+      }
     };
 
     fetchStressLevel();
@@ -86,20 +101,26 @@ const PixijsForm = () => {
     treeSprite.y = app.renderer.height / 2 + 100;
     app.stage.addChild(treeSprite);
 
+    // ストレスレベルがnullの場合、葉っぱは表示しない
+    if (stressLevel === null) {
+      // ストレスレベルがない場合、葉っぱを表示せずに木だけ表示する
+      return;
+    }
+
     // 葉っぱの色をストレスレベルに合わせて選択する
     const getColorForStress = (totalScore: number | null) => {
       if (totalScore === null || totalScore === undefined) {
         console.warn("total_scoreが未定義のため、デフォルト色を適用します。");
-        return "#4ffd74"; // デフォルト（緑）
+        return "#a8ffd3"; // デフォルト（緑）
       }
 
-      if (totalScore >= 86) return "#ff2137"; // 赤
-      if (totalScore >= 72) return "#ff69b4"; // ピンク
-      if (totalScore >= 58) return "#ff9d2d"; // オレンジ
-      if (totalScore >= 43) return "#fefe51"; // 黄色
-      if (totalScore >= 29) return "#4ffd74"; // 緑
-      if (totalScore >= 15) return "#a839fd"; // 紫
-      return "#2ba3ff"; // 青（0～14）
+      if (totalScore >= 86) return "#ffc1c1"; // 赤
+      if (totalScore >= 72) return "#ffd1ff"; // ピンク
+      if (totalScore >= 58) return "#ffead6"; // オレンジ
+      if (totalScore >= 43) return "#ffffd1"; // 黄色
+      if (totalScore >= 29) return "#d1ffd1"; // 緑
+      if (totalScore >= 15) return "#e8d1ff"; // 紫
+      return "#d1e8ff"; // 青（0～14）
     };
 
     // 葉っぱを追加する関数
@@ -150,6 +171,10 @@ const PixijsForm = () => {
 
     // 新しい葉っぱを追加し、データベースに保存
     const handleLeafClick = async (event: MouseEvent) => {
+      // ストレスレベルが null の場合は処理を中断
+      if (stressLevel === null) {
+        return;
+      }
       // ストレスレベルに対して既に葉っぱが追加されていれば、何もせず終了
       if (addedStressLevels.has(stressLevel)) {
         console.log("既にこのストレスレベルに対して葉っぱが追加されています。");
@@ -201,7 +226,7 @@ const PixijsForm = () => {
       }
       app.destroy(true, true);
     };
-  }, [leaves, stressLevel, userId, addedStressLevels]);
+  }, [leaves, stressLevel, userId, addedStressLevels, isEmpty]);
 
   return <div ref={pixiContainer}></div>;
 };

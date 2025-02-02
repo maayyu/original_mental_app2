@@ -123,6 +123,42 @@ export default function AuthPage() {
       }
 
       setLoading(false);
+
+      // ユーザー情報を取得
+      const { data: user, error: userError } = await supabase
+        .from("users")
+        .select("*")
+        .eq("email", email)
+        .single();
+
+      if (userError) {
+        console.error("ユーザー情報の取得に失敗しました:", userError);
+        setError("エラーが発生しました。もう一度お試しください。");
+        return;
+      }
+
+      // ユーザー情報が存在しない場合、usersテーブルに保存
+      if (!user) {
+        // パスワードをハッシュ化
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const { error: insertError } = await supabase.from("users").insert([
+          {
+            id: data.user.id,
+            name: email.split("@")[0], // emailからユーザー名を生成 (必要に応じて変更)
+            email,
+            password: hashedPassword,
+            email_verified: false,
+          },
+        ]);
+
+        if (insertError) {
+          console.error("ユーザー情報の保存に失敗しました:", insertError);
+          setError("エラーが発生しました。もう一度お試しください。");
+          return;
+        }
+      }
+
       router.push("/home");
     }
   };
