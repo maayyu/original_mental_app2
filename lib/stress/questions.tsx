@@ -1,4 +1,8 @@
-export const questionsByDay = {
+type QuestionsByDay = {
+  [key in 0 | 1 | 2 | 3 | 4 | 5 | 6]: string[]; // 各曜日に対して文字列の配列
+};
+
+export const questionsByDay: QuestionsByDay = {
   0: [
     "今日はリラックスする時間を取れましたか？",
     "今日の睡眠の質はどうでしたか？",

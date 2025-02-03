@@ -13,8 +13,16 @@ import supabase from "@/lib/supabaseClient";
 import "./home.css";
 import PixijsForm from "@/components/PixijsForm";
 
+type Diary = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  converted_content: string;
+};
+
 export default function HomePage() {
-  const [diaries, setDiaries] = useState([]);
+  const [diaries, setDiaries] = useState<Diary[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +51,7 @@ export default function HomePage() {
       if (error) {
         console.error("Error fetching diaries: ", error.message);
       } else {
-        setDiaries(data);
+        setDiaries(data as Diary[]);
       }
       setLoading(false);
     };

@@ -6,10 +6,18 @@ import supabase from "@/lib/supabaseClient";
 import React, { useEffect, useState } from "react";
 import "./datas.css";
 
+type Diary = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  converted_content: string;
+};
+
 export default function DiaryEntryPage() {
-  const [diaries, setDiaries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectDiary, setSelectDiary] = useState(null);
+  const [diaries, setDiaries] = useState<Diary[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [selectDiary, setSelectDiary] = useState<Diary | null>(null);
 
   useEffect(() => {
     // 日記データを取得
@@ -36,14 +44,14 @@ export default function DiaryEntryPage() {
       if (error) {
         console.error("Error fetching diaries: ", error.message);
       } else {
-        setDiaries(data);
+        setDiaries(data as Diary[]);
       }
       setLoading(false);
     };
     fetchDiaries();
   }, []);
 
-  const handleDiaryClick = (diary) => {
+  const handleDiaryClick = (diary: Diary) => {
     setSelectDiary(diary);
   };
 

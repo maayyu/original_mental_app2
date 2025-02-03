@@ -91,7 +91,7 @@ const PixijsForm = () => {
 
     // PixiJS のビューを DOM に追加
     pixiContainer.current.innerHTML = "";
-    pixiContainer.current.appendChild(app.view);
+    pixiContainer.current.appendChild(app.view as unknown as Node);
 
     // 木の画像を追加
     const treeTexture = PIXI.Texture.from("/images/tree.png");
@@ -172,7 +172,7 @@ const PixijsForm = () => {
     // 新しい葉っぱを追加し、データベースに保存
     const handleLeafClick = async (event: MouseEvent) => {
       // ストレスレベルが null の場合は処理を中断
-      if (stressLevel === null) {
+      if (stressLevel === null || !app.view) {
         return;
       }
       // ストレスレベルに対して既に葉っぱが追加されていれば、何もせず終了
@@ -182,7 +182,13 @@ const PixijsForm = () => {
         return;
       }
 
-      const rect = app.view.getBoundingClientRect();
+      if (!app.view) {
+        console.error("app.view is undefined");
+        return;
+      }
+
+      const view = app.view as unknown as HTMLCanvasElement;
+      const rect = view.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       const color = getColorForStress(stressLevel);
@@ -217,12 +223,14 @@ const PixijsForm = () => {
       }
     };
 
-    app.view.addEventListener("click", handleLeafClick);
+    const canvasView = app.view as HTMLCanvasElement;
+    canvasView.addEventListener("click", handleLeafClick);
 
     // クリーンアップ処理
     return () => {
       if (app && app.view) {
-        app.view.removeEventListener("click", handleLeafClick);
+        const removeView = app.view as HTMLCanvasElement;
+        removeView.removeEventListener("click", handleLeafClick);
       }
       app.destroy(true, true);
     };
