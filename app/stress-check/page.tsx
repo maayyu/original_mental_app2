@@ -8,11 +8,15 @@ import { useRouter } from "next/navigation";
 import { getStressLevel } from "@/lib/stress/stressLevels";
 import "./stress.css";
 
+type QuestionsByDay = {
+  [key: number]: string[];
+};
+
 export default function StressCheckPage() {
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState(Array(7).fill(""));
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -26,10 +30,10 @@ export default function StressCheckPage() {
     fetchUserId();
 
     const dayOfWeek = new Date().getDay();
-    setQuestions(questionsByDay[dayOfWeek] || []);
+    setQuestions((questionsByDay as QuestionsByDay)[dayOfWeek] || []);
   }, []);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index: number, value: string) => {
     const newAnswers = [...answers];
     newAnswers[index] = value;
     setAnswers(newAnswers);
@@ -55,7 +59,7 @@ export default function StressCheckPage() {
     console.log("Percentage Score:", percentageScore);
     console.log("Stress Level:", stressLevel);
 
-    const { data, error } = await supabase.from("stress_checks").insert([
+    const { error } = await supabase.from("stress_checks").insert([
       {
         user_id: userId,
         answers,
