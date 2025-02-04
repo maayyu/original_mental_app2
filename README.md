@@ -56,3 +56,45 @@ Bright Balance ～日記で整える、心と生活～
     ID:test@example.com
     PASS:test12
 ~~~
+
+## 🚀　環境構築
+
+1. リポジトリをクローン
+```
+git clone https://github.com/maayyu/original_mental_app2.git
+cd original_mental_app2
+```
+2. 必要な環境を準備  
+
+| 必須ソフト  | バージョン (推奨) |
+|------------|------------------|
+| Node.js    | `18.x` 以上 |
+| npm または yarn | `8.x` 以上 |
+
+3. 依存関係のインストール
+```
+npm install
+```
+または
+```
+yarn install
+```
+4. 環境変数ファイルの作成
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+NEXT_PUBLIC_GEMINI_API_KEY=your-gemini-api-key
+```
+ > **⚠ 注意:** `your-supabase-url` などは、Supabase や Gemini API から取得したキーに置き換えてください。
+5. 開発サーバーの起動
+```
+npm run dev
+```
+または
+```
+yarn dev
+```
+これにより、開発用サーバーが起動し、ブラウザで `http://localhost:3000` にアクセスするとアプリを確認できます。  
+
+🎉 環境構築完了！ 
