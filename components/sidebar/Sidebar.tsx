@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import "./sidebar.css";
 
 export default function Sidebar() {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   // メニュー項目
   const menuItems = [
@@ -16,20 +17,34 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="sidebar">
-      <h2 className="sidebarTitle">メニュー</h2>
-      <ul className="menuList">
-        {menuItems.map((item, index) => (
-          <li key={index} className="menuItem">
-            <button
-              className="menuButton"
-              onClick={() => router.push(item.path)}
-            >
-              {item.text}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <>
+      {/* ハンバーガーメニュー */}
+      <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+        ☰
+      </button>
+
+      {isOpen && (
+        <div className="overlay" onClick={() => setIsOpen(false)}></div>
+      )}
+
+      <nav className={`sidebar ${isOpen ? "open" : ""}`}>
+        <h2 className="sidebarTitle">メニュー</h2>
+        <ul className="menuList">
+          {menuItems.map((item, index) => (
+            <li key={index} className="menuItem">
+              <button
+                className="menuButton"
+                onClick={() => {
+                  router.push(item.path);
+                  setIsOpen(false);
+                }}
+              >
+                {item.text}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
   );
 }
