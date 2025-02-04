@@ -85,8 +85,8 @@ const PixijsForm = () => {
     // PixiJS のアプリケーションを作成
     const app = new PIXI.Application({
       width: 800,
-      height: 600,
-      backgroundColor: 0xffffff,
+      height: 500,
+      backgroundColor: 0xf4fdff,
     });
 
     // PixiJS のビューを DOM に追加
@@ -98,7 +98,7 @@ const PixijsForm = () => {
     const treeSprite = new PIXI.Sprite(treeTexture);
     treeSprite.anchor.set(0.5);
     treeSprite.x = app.renderer.width / 2;
-    treeSprite.y = app.renderer.height / 2 + 100;
+    treeSprite.y = app.renderer.height / 2 + 50;
     app.stage.addChild(treeSprite);
 
     // ストレスレベルがnullの場合、葉っぱは表示しない
