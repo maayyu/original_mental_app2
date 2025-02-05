@@ -8,7 +8,7 @@
   background-color: #def7ff;
   height: 7rem;
   margin: 0 auto;
-  padding: 0 20rem;
+  padding: 0 5rem 0 20rem;
   position: fixed;
   top: 0;
   width: 100%;
@@ -21,12 +21,6 @@
   align-items: center;
 }
 
-.header-left {
-}
-
-.header-log {
-}
-
 .app-name {
   font-family: "Sansita Swashed", "Poetsen One";
   font-size: 35px;
@@ -34,15 +28,16 @@
 }
 
 .header-right {
+  position: relative;
   gap: 2rem;
 }
 
 .user-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #7ec3ff;
+  width: 70px;
+  height: 70px;
+  background-color: #4e8fff;
   color: white;
-  font-size: 20px;
+  font-size: 40px;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
@@ -52,7 +47,40 @@
   transition: 0.3s;
 }
 
-.guest {
+.user-icon:hover {
+  background-color: #7ec3ff;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
 }
 
 .login-button,
@@ -72,4 +100,26 @@
 .header-home:hover {
   background: linear-gradient(45deg, #00f2fe, #4facfe);
   transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .header {
+    justify-content: center;
+    padding: 0 0.5rem 0 4.5em;
+    height: 5rem;
+  }
+  .header-log {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .app-name {
+    font-size: 25px;
+  }
+
+  .user-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    margin-left: 2rem;
+  }
 }
