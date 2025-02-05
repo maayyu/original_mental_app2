@@ -7,11 +7,8 @@
   align-items: center;
   background-color: #def7ff;
   height: 7rem;
-  margin: 0 auto;
   padding: 0 5rem 0 20rem;
-  position: fixed;
-  top: 0;
-  width: 100%;
+  width: auto;
   border-bottom: 3px solid #87c4ff;
 }
 
@@ -109,11 +106,11 @@
     height: 5rem;
   }
   .header-log {
-    width: 40px !important;
-    height: 40px !important;
+    width: 35px !important;
+    height: 35px !important;
   }
   .app-name {
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .user-icon {

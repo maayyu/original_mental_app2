@@ -28,7 +28,6 @@ export default function Sidebar() {
       )}
 
       <nav className={`sidebar ${isOpen ? "open" : ""}`}>
-        <h2 className="sidebarTitle">メニュー</h2>
         <ul className="menuList">
           {menuItems.map((item, index) => (
             <li key={index} className="menuItem">
