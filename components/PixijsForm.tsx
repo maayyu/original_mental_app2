@@ -157,17 +157,6 @@ const PixijsForm = () => {
       color: string,
       rotation: number
     ) => {
-      console.log(
-        "葉っぱを追加: X=",
-        posX,
-        " Y=",
-        posY,
-        " 色=",
-        color,
-        " 回転=",
-        rotation
-      );
-
       const leafTexture = PIXI.Texture.from("/images/leaf.png");
       const leafSprite = new PIXI.Sprite(leafTexture);
 
@@ -225,8 +214,6 @@ const PixijsForm = () => {
       const y = event.clientY - rect.top;
       const color = getColorForStress(stressLevel);
       const rotation = Math.random() * Math.PI * 2;
-
-      console.log("追加する葉っぱの色:", color, "回転角度:", rotation);
 
       addLeaf(x, y, color, rotation);
 

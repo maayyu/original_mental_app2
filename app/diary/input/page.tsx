@@ -34,7 +34,7 @@ export default function DiaryInputPage() {
       //Supabaseに入力内容を保存
       const { data, error } = await supabase.from("diaries").insert([
         {
-          //   user_id: user.id,
+          user_id: user.id,
           content: inputText,
         },
       ]);

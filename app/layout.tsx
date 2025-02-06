@@ -15,7 +15,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body>
-        {/* <ControlViewport /> */}
         {/* ヘッダーとサイドバーを非表示にする条件 */}
         {!isAuthPage && (
           <>
