@@ -28,13 +28,15 @@ export default function StressCheckResultPage() {
 
   return (
     <div className="container">
-      <h1>ストレスチェック結果</h1>
-      <p>合計スコア: {totalScore}</p>
-      <p>ストレス度: {percentageScore}%</p>
-      <h2>ストレスレベル:{getStressLevel(percentageScore)} </h2>
-      <ul>
+      <h1 className="result-h1">ストレスチェック結果</h1>
+      <p className="result-p">合計スコア: {totalScore}</p>
+      <p className="result-p">ストレス度: {percentageScore}%</p>
+      <h2 className="result-h2">
+        ストレスレベル:{getStressLevel(percentageScore)}{" "}
+      </h2>
+      <ul className="result-ul">
         {parsedAnswers.map((answer, index) => (
-          <li key={index}>
+          <li key={index} className="result-li">
             質問 {index + 1}: {answer}
           </li>
         ))}
