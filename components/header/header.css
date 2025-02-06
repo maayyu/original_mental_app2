@@ -6,8 +6,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #def7ff;
-  height: 7rem;
-  padding: 0 5rem 0 20rem;
+  padding: 1rem 5rem 1rem 17rem;
   width: auto;
   border-bottom: 3px solid #87c4ff;
 }
@@ -101,8 +100,7 @@
 
 @media (max-width: 768px) {
   .header {
-    justify-content: center;
-    padding: 0 0.5rem 0 4.5em;
+    padding: 1rem 1rem 1rem 4.5em;
     height: 5rem;
   }
   .header-log {
