@@ -74,13 +74,13 @@ export default function DiaryOutputPage() {
 
   return (
     <div className="container">
-      <h1>出力結果</h1>
+      <h1 className="output-h1">出力結果</h1>
       <div className="output-box">
-        <h2>入力内容</h2>
+        <h2 className="output-h2">入力内容</h2>
         <p>{data?.content}</p>
       </div>
       <div className="output-box">
-        <h2>ポジティブ変換結果</h2>
+        <h2 className="output-h2">ポジティブ変換結果</h2>
         <p>{data?.converted_content}</p>
       </div>
       <Link href="/home">

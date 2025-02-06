@@ -1,17 +1,20 @@
 /* 全体のコンテナ */
 .diary-container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 3rem;
 }
 
 /* タイトル */
-h2 {
+.diary-title {
   text-align: center;
   color: #333;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 /* 日記リスト */
@@ -38,7 +41,7 @@ h2 {
 }
 
 .diary-date {
-  font-size: 14px;
+  font-size: 0.9rem;
   color: #777;
 }
 
@@ -47,6 +50,10 @@ h2 {
   margin-top: 5px;
   font-size: 16px;
   line-height: 1.4;
+}
+
+.diary-strong {
+  font-size: 1rem;
 }
 
 /* モーダル */
@@ -86,4 +93,23 @@ h2 {
 
 .close-button:hover {
   color: #333;
+}
+
+@media (max-width: 768px) {
+  .diary-container {
+    margin-top: 0;
+    padding: 0 2rem;
+  }
+
+  .diary-title {
+    font-size: 1.7rem;
+  }
+
+  .diary-date {
+    font-size: 0.6rem;
+  }
+
+  .diary-content {
+    font-size: 0.7rem;
+  }
 }

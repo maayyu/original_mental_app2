@@ -62,7 +62,7 @@ export default function DiaryEntryPage() {
   return (
     <div className="diary-container">
       {/* 日記の詳細を表示するためのコンテンツ */}
-      <h2>最新の日記</h2>
+      <h2 className="diary-title">最新の日記</h2>
       {loading ? (
         <p>読み込み中...</p>
       ) : (
@@ -85,10 +85,14 @@ export default function DiaryEntryPage() {
                 })}
               </p>
               <p className="diary-content">
-                <strong>日記内容:</strong> {diary.content}
+                <strong>日記内容</strong>
+                <br />
+                {diary.content}
               </p>
-              <p className="diary-converted">
-                <strong>変換後の日記内容:</strong> {diary.converted_content}
+              <p className="diary-content">
+                <strong>変換後の日記内容</strong>
+                <br />
+                {diary.converted_content}
               </p>
             </li>
           ))}
