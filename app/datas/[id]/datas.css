@@ -17,6 +17,18 @@
   font-weight: bold;
 }
 
+.loading {
+  font-size: 1.5rem;
+  color: #429dff;
+  text-align: center;
+}
+
+.noDiary {
+  font-size: 1.2rem;
+  color: #ff9372;
+  text-align: center;
+}
+
 /* 日記リスト */
 .diary-list {
   list-style: none;
@@ -24,7 +36,7 @@
 }
 
 .diary-item {
-  background: white;
+  background: #fcfcfc;
   padding: 15px;
   margin: 10px 0;
   border-radius: 8px;
@@ -40,6 +52,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+hr {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
 .diary-date {
   font-size: 0.9rem;
   color: #777;
@@ -47,13 +64,18 @@
 
 .diary-content {
   margin-top: 5px;
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .diary-content strong {
   font-size: 1rem;
   color: #429dff;
+}
+
+hr {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 /* モーダル */
