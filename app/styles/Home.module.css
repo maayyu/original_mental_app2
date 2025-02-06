@@ -56,6 +56,7 @@
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    justify-content: start;
     margin: 0;
   }
 
