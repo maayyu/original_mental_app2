@@ -10,6 +10,7 @@ import Image from "next/image";
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const router = useRouter();
 
@@ -56,28 +57,33 @@ export default function Header() {
           height={50}
           className="header-log"
         />
-        <h1 className="app-name">Bright Balance</h1>
+        <Link href="/home">
+          <h1 className="app-name">Bright Balance</h1>
+        </Link>
       </div>
-
       <div className="header-right">
-        <button className="header-home" onClick={handleHome}>
-          ホーム
-        </button>
         {user ? (
-          <>
-            <div className="user-icon">{user.email?.charAt(0)}</div>
-            <button className="logout-button" onClick={handleLogout}>
-              ログアウト
-            </button>
-          </>
+          <div className="user-menu">
+            <div className="user-icon" onClick={() => setMenuOpen(!menuOpen)}>
+              {user.email?.charAt(0)}
+            </div>
+            {menuOpen && (
+              <div className="dropdown-menu">
+                <button className="menu-button" onClick={handleHome}>
+                  ホーム
+                </button>
+                <button className="menu-button" onClick={handleLogout}>
+                  ログアウト
+                </button>
+              </div>
+            )}
+          </div>
         ) : (
-          <>
-            <Link href="/auth">
-              <button className="login-button">ログイン</button>
-            </Link>
-          </>
+          <Link href="/auth">
+            <button className="login-button">ログイン</button>
+          </Link>
         )}
-      </div>
+      </div>{" "}
     </header>
   );
 }

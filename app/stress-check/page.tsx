@@ -86,10 +86,10 @@ export default function StressCheckPage() {
 
   return (
     <div className="container">
-      <h1>ストレスチェック</h1>
+      <h1 className="stress-h1">ストレスチェック</h1>
       {questions.map((question, index) => (
         <div key={index} className="output-box">
-          <h2>{question}</h2>
+          <h2 className="stress-h2">{question}</h2>
           <div className="radioGroup">
             {[0, 1, 2, 3, 4].map((value) => (
               <label key={value}>
