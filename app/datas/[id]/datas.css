@@ -45,15 +45,15 @@
   color: #777;
 }
 
-.diary-content,
-.diary-converted {
+.diary-content {
   margin-top: 5px;
   font-size: 16px;
   line-height: 1.4;
 }
 
-.diary-strong {
+.diary-content strong {
   font-size: 1rem;
+  color: #429dff;
 }
 
 /* モーダル */
@@ -103,6 +103,10 @@
 
   .diary-title {
     font-size: 1.7rem;
+  }
+
+  .diary-content strong {
+    font-size: 0.8rem;
   }
 
   .diary-date {
