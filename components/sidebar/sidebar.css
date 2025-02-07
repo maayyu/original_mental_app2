@@ -52,13 +52,14 @@
   .sidebar {
     transform: translateX(-100%);
     width: 100%;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     height: auto;
   }
 
   .sidebar.open {
+    display: flex;
     transform: translateX(0);
     width: 50%;
   }
