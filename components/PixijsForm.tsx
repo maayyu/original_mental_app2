@@ -173,9 +173,9 @@ const PixijsForm = () => {
       // 画面幅による葉っぱの縮小
       let scale = 0.15;
       if (screenWidth <= 768) {
-        scale *= 0.5;
-      } else if (screenWidth <= 1024) {
         scale *= 0.7;
+      } else if (screenWidth <= 1024) {
+        scale *= 0.9;
       }
       leafSprite.scale.set(scale);
 

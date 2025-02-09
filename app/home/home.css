@@ -3,6 +3,7 @@
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  width: auto;
 }
 
 /* メインビジュアルエリア */
@@ -87,7 +88,7 @@ hr {
 
 @media (max-width: 768px) {
   .container {
-    margin: 0;
+    margin: 1rem;
   }
 
   .visual {
