@@ -55,6 +55,8 @@ export default function AuthPage() {
         return;
       }
 
+      console.log("Signing up with:", { email, password, username });
+
       // Supabaseのサインアップ機能
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -107,7 +109,7 @@ export default function AuthPage() {
         setMessage("確認メールを送信しました。メールをご確認ください");
         setError(null);
 
-        setTimeout(() => router.push("/auth/sign-in"), 3000);
+        setTimeout(() => router.push("/auth"), 3000);
       }
     } else {
       // サインイン処理
@@ -117,7 +119,7 @@ export default function AuthPage() {
       });
 
       if (error) {
-        setError("ユーザー名またはパスワードが間違っています。");
+        setError("メールアドレスまたはパスワードが間違っています。");
         setLoading(false);
         return;
       }
