@@ -1,7 +1,10 @@
 .container {
-  width: auto;
-  margin: 0 auto;
-  padding: 20px;
+  width: 60%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .stress-h1 {
@@ -73,6 +76,10 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    width: 90%;
+    margin: 1rem;
+  }
   .stress-h1 {
     font-size: 1rem;
   }

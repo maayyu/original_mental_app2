@@ -173,9 +173,9 @@ const PixijsForm = () => {
       // 画面幅による葉っぱの縮小
       let scale = 0.15;
       if (screenWidth <= 768) {
-        scale *= 0.5;
-      } else if (screenWidth <= 1024) {
         scale *= 0.7;
+      } else if (screenWidth <= 1024) {
+        scale *= 0.9;
       }
       leafSprite.scale.set(scale);
 
@@ -187,7 +187,14 @@ const PixijsForm = () => {
 
     // 既存の葉っぱを描画
     leaves.forEach((leaf) => {
-      addLeaf(leaf.x, leaf.y, leaf.color, leaf.rotation);
+      // 葉っぱ位置を画面サイズで変更する
+      const scaleX = treeSprite.scale.x;
+      const scaleY = treeSprite.scale.y;
+      const x = app.renderer.width / 2 - scaleX * (400 - leaf.x);
+      const y =
+        app.renderer.height / 2 + 50 * scaleY - scaleY * (250 + 50 - leaf.y);
+
+      addLeaf(x, y, leaf.color, leaf.rotation);
     });
 
     // 新しい葉っぱを追加し、データベースに保存
