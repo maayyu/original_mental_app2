@@ -1,36 +1,35 @@
 .container {
-  max-width: 600px;
+  width: auto;
   margin: 0 auto;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-h1 {
-  font-size: 24px;
+.result-h1 {
+  font-size: 2rem;
+  font-weight: bold;
   color: #333;
   margin-bottom: 20px;
 }
 
-p {
+.result-p {
   font-size: 18px;
   color: #444;
   margin: 10px 0;
 }
 
-h2 {
+.result-h2 {
   font-size: 20px;
   color: #007bff;
   margin: 15px 0;
 }
 
-ul {
+.result-ul {
   list-style-type: none;
   padding: 0;
 }
 
-li {
+.result-li {
   background: white;
   padding: 10px;
   border-radius: 5px;
@@ -55,4 +54,10 @@ li {
 
 .button:hover {
   background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .result-h1 {
+    font-size: 1rem;
+  }
 }

@@ -1,12 +1,14 @@
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
-h1 {
+.stress-h1 {
+  font-size: 2rem;
   text-align: center;
   color: #333;
   margin-bottom: 20px;
@@ -20,8 +22,8 @@ h1 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  font-size: 18px;
+.stress-h2 {
+  font-size: 1rem;
   color: #444;
   margin-bottom: 10px;
 }
@@ -71,4 +73,21 @@ h2 {
 
 .button:hover:not(:disabled) {
   background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    margin: 1rem;
+  }
+  .stress-h1 {
+    font-size: 1rem;
+  }
+  .stress-h2 {
+    font-size: 0.8rem;
+  }
+
+  .radioGroup label {
+    font-size: 0.8rem;
+  }
 }

@@ -62,35 +62,43 @@ export default function DiaryEntryPage() {
   return (
     <div className="diary-container">
       {/* 日記の詳細を表示するためのコンテンツ */}
-      <h2>最新の日記</h2>
+      <h2 className="diary-title">最新の日記</h2>
       {loading ? (
-        <p>読み込み中...</p>
+        <p className="loading">Loading...</p>
+      ) : diaries.length === 0 ? (
+        <p className="noDiary">現在、保存されている日記がありません。</p>
       ) : (
         <ul className="diary-list">
           {diaries.map((diary) => (
-            <li
-              key={diary.id}
-              onClick={() => handleDiaryClick(diary)}
-              className="diary-item"
-            >
-              <p className="diary-date">
-                {new Date(diary.created_at).toLocaleString("ja-JP", {
-                  weekday: "short",
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: false,
-                })}
-              </p>
-              <p className="diary-content">
-                <strong>日記内容:</strong> {diary.content}
-              </p>
-              <p className="diary-converted">
-                <strong>変換後の日記内容:</strong> {diary.converted_content}
-              </p>
-            </li>
+            <React.Fragment key={diary.id}>
+              <li
+                onClick={() => handleDiaryClick(diary)}
+                className="diary-item"
+              >
+                <p className="diary-date">
+                  {new Date(diary.created_at).toLocaleString("ja-JP", {
+                    weekday: "short",
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: false,
+                  })}
+                </p>
+                <p className="diary-content">
+                  <strong>日記内容</strong>
+                  <br />
+                  {diary.content}
+                </p>
+                <p className="diary-content">
+                  <strong>変換後の日記内容</strong>
+                  <br />
+                  {diary.converted_content}
+                </p>
+              </li>
+              <hr />
+            </React.Fragment>
           ))}
         </ul>
       )}
@@ -115,10 +123,12 @@ export default function DiaryEntryPage() {
               })}
             </p>
             <p className="diary-content">
-              <strong>日記内容:</strong> {selectDiary.content}
+              <strong>日記内容</strong>
+              <br /> {selectDiary.content}
             </p>
-            <p className="diary-converted">
-              <strong>変換後の日記内容:</strong> {selectDiary.converted_content}
+            <p className="diary-content">
+              <strong>変換後の日記内容</strong>
+              <br /> {selectDiary.converted_content}
             </p>
           </div>
         </div>

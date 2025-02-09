@@ -1,7 +1,112 @@
-.home-conteiner {
-  backdrop-filter: blur(20px) saturate(188%);
-  -webkit-backdrop-filter: blur(20px) saturate(188%);
-  background-color: rgba(116, 136, 181, 0.7);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.125);
+/* コンテナ */
+.container {
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+/* メインビジュアルエリア */
+.visual {
+  width: 100%;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+/* 最新の日記のセクション */
+.diaryContainer {
+  margin-top: 40px;
+}
+
+.diaryContainer h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* ローディング表示 */
+.loading {
+  font-size: 1.5rem;
+  color: #429dff;
+  text-align: center;
+}
+
+/* 日記がない場合 */
+.noDiary {
+  font-size: 1.2rem;
+  color: #ff9372;
+  text-align: center;
+}
+
+/* 日記リスト */
+.diaryList {
+  list-style: none;
+  padding: 0;
+}
+
+.diaryItem {
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.diaryItem:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 日記の日付 */
+.diaryDate {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+/* 日記内容 */
+.diaryContent {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.diaryContent strong {
+  color: #429dff;
+  font-weight: bold;
+}
+
+/* 仕切り線 */
+hr {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+  }
+
+  .visual {
+    margin-top: 0;
+  }
+  .diaryContainer {
+    margin-top: 30px;
+  }
+
+  .diaryContainer h2 {
+    font-size: 1.7rem;
+  }
+
+  .diaryContent {
+    font-size: 0.7rem;
+  }
+
+  .diaryDate {
+    font-size: 0.6rem;
+  }
 }

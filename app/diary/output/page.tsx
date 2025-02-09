@@ -17,23 +17,23 @@ export default function DiaryOutputPage() {
     const fetchData = async () => {
       setLoading(true);
 
-      //   // 認証ユーザー情報の取得
-      //   const {
-      //     data: { user },
-      //     error: authError,
-      //   } = await supabase.auth.getUser();
+      // 認証ユーザー情報の取得
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
-      //   if (authError || !user) {
-      //     alert("認証エラー: ログインしてください。");
-      //     setLoading(false);
-      //     return;
-      //   }
+      if (authError || !user) {
+        alert("認証エラー: ログインしてください。");
+        setLoading(false);
+        return;
+      }
 
       //   最新の入力内容の取得
       const { data: diary, error: fetchError } = await supabase
         .from("diaries")
         .select("content, converted_content")
-        // .eq("user_id", user.id)
+        .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
@@ -74,13 +74,13 @@ export default function DiaryOutputPage() {
 
   return (
     <div className="container">
-      <h1>出力結果</h1>
+      <h1 className="output-h1">出力結果</h1>
       <div className="output-box">
-        <h2>入力内容</h2>
+        <h2 className="output-h2">入力内容</h2>
         <p>{data?.content}</p>
       </div>
       <div className="output-box">
-        <h2>ポジティブ変換結果</h2>
+        <h2 className="output-h2">ポジティブ変換結果</h2>
         <p>{data?.converted_content}</p>
       </div>
       <Link href="/home">

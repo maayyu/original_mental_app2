@@ -2,6 +2,6 @@
 
 import React from "react";
 
-export default function DiaryPage() {
+export default function StressDatas() {
   return <></>;
 }

@@ -82,11 +82,26 @@ const PixijsForm = () => {
   useEffect(() => {
     if (!pixiContainer.current || stressLevel === null || !userId) return;
 
+    // スマホ対応: 画面幅に応じて幅を調整
+    const updateCanvasSize = () => {
+      const screenWidth = window.innerWidth;
+      let width = 800; // デフォルト（PC）
+
+      if (screenWidth <= 768) {
+        width = screenWidth - 20; // スマホ時は左右10px余白
+      } else if (screenWidth <= 1024) {
+        width = Math.floor(screenWidth * 0.9); // タブレット時は 90%
+      }
+
+      return { width, height: 500 };
+    };
+
     // PixiJS のアプリケーションを作成
+    const { width, height } = updateCanvasSize();
     const app = new PIXI.Application({
-      width: 800,
-      height: 600,
-      backgroundColor: 0xffffff,
+      width,
+      height,
+      backgroundColor: 0xf4fdff,
     });
 
     // PixiJS のビューを DOM に追加
@@ -98,7 +113,19 @@ const PixijsForm = () => {
     const treeSprite = new PIXI.Sprite(treeTexture);
     treeSprite.anchor.set(0.5);
     treeSprite.x = app.renderer.width / 2;
-    treeSprite.y = app.renderer.height / 2 + 100;
+    treeSprite.y = app.renderer.height / 2 + 50;
+
+    // 画面幅によって木のサイズを調整
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 768) {
+      treeSprite.scale.set(0.5); // スマホ時は 50% に縮小
+    }
+    if (screenWidth <= 1024) {
+      treeSprite.scale.set(0.7); // タブレット時は 70% に縮小
+    } else {
+      treeSprite.scale.set(1); // PC時は等倍
+    }
+
     app.stage.addChild(treeSprite);
 
     // ストレスレベルがnullの場合、葉っぱは表示しない
@@ -130,17 +157,6 @@ const PixijsForm = () => {
       color: string,
       rotation: number
     ) => {
-      console.log(
-        "葉っぱを追加: X=",
-        posX,
-        " Y=",
-        posY,
-        " 色=",
-        color,
-        " 回転=",
-        rotation
-      );
-
       const leafTexture = PIXI.Texture.from("/images/leaf.png");
       const leafSprite = new PIXI.Sprite(leafTexture);
 
@@ -151,12 +167,17 @@ const PixijsForm = () => {
       // ランダムな回転
       leafSprite.rotation = rotation;
 
-      // 葉っぱのサイズ調整
-      const scale = Math.random() * 0 + 0.15;
-      leafSprite.scale.set(scale);
-
       // 中心にアンカーを設定
       leafSprite.anchor.set(0.5);
+
+      // 画面幅による葉っぱの縮小
+      let scale = 0.15;
+      if (screenWidth <= 768) {
+        scale *= 0.7;
+      } else if (screenWidth <= 1024) {
+        scale *= 0.9;
+      }
+      leafSprite.scale.set(scale);
 
       // 色を設定
       leafSprite.tint = parseInt(color.replace("#", "0x"), 16);
@@ -166,7 +187,14 @@ const PixijsForm = () => {
 
     // 既存の葉っぱを描画
     leaves.forEach((leaf) => {
-      addLeaf(leaf.x, leaf.y, leaf.color, leaf.rotation);
+      // 葉っぱ位置を画面サイズで変更する
+      const scaleX = treeSprite.scale.x;
+      const scaleY = treeSprite.scale.y;
+      const x = app.renderer.width / 2 - scaleX * (400 - leaf.x);
+      const y =
+        app.renderer.height / 2 + 50 * scaleY - scaleY * (250 + 50 - leaf.y);
+
+      addLeaf(x, y, leaf.color, leaf.rotation);
     });
 
     // 新しい葉っぱを追加し、データベースに保存
@@ -193,8 +221,6 @@ const PixijsForm = () => {
       const y = event.clientY - rect.top;
       const color = getColorForStress(stressLevel);
       const rotation = Math.random() * Math.PI * 2;
-
-      console.log("追加する葉っぱの色:", color, "回転角度:", rotation);
 
       addLeaf(x, y, color, rotation);
 
