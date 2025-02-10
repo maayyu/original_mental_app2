@@ -224,12 +224,15 @@ const PixijsForm = () => {
 
       addLeaf(x, y, color, rotation);
 
+      const convertX = 400 - (width / 2 - x) / treeSprite.scale.x;
+      const convertY = 250 - (height / 2 - y) / treeSprite.scale.y;
+
       if (userId) {
         const { error: insertError } = await supabase.from("leaves").insert([
           {
             user_id: userId,
-            x,
-            y,
+            x: convertX,
+            y: convertY,
             rotation,
             color,
             created_at: new Date(),
@@ -244,7 +247,10 @@ const PixijsForm = () => {
           setAddedStressLevels((prev) => new Set(prev).add(stressLevel));
 
           // 新しい葉っぱ情報を状態に追加して再描画
-          setLeaves((prevLeaves) => [...prevLeaves, { x, y, color, rotation }]);
+          setLeaves((prevLeaves) => [
+            ...prevLeaves,
+            { x: convertX, y: convertY, color, rotation },
+          ]);
         }
       }
     };
